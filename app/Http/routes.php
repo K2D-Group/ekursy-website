@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/kurs/', 'Frontend\CoursesController@index');
+
+
+
+
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');

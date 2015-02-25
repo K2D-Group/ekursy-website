@@ -20,17 +20,14 @@ class SourceRepository {
 
     public function get()
     {
-
         foreach ($this->getRepositoriesList() as $repo) {
-            if(substr($repo['name'], 0, 7) != 'Kurs - ' && false)
+            if(substr($repo['name'], 0, 7) != 'Kurs - ')
                 continue;
             $branches = $this->getBranches($repo['full_name']);
-//            dd($repo, $branches);
             foreach ($branches as $branch_name => $branch) {
                 $this->download($repo['full_name'], $branch_name);
             }
         }
-        exit;
     }
 
     public function getRepositoriesList()
@@ -73,7 +70,7 @@ class SourceRepository {
     {
         $repoName = explode('/', $repoFullName);
         $repoName = $repoName[1];
-        
+
         $temporary_name = $this->getTempName();
         $response = $this->client->get('https://bitbucket.org/' . $repoFullName . '/get/' . $branch . '.zip', ['auth' => 'oauth']);
         file_put_contents($temporary_name, $response->getBody());
