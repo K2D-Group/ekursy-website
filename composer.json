@@ -38,7 +38,9 @@
 		"kduma/eloquent-sluggable": "~1.0",
 		"kduma/permissions": "~0.1",
 		"kduma/polish-validator": "~0.1",
-	  	"laravel/socialite": "2.0.*@dev"
+	  	"laravel/socialite": "2.0.*@dev",
+        "guzzlehttp/guzzle": "~5.0",
+        "guzzlehttp/oauth-subscriber": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

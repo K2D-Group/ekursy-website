@@ -34,4 +34,9 @@ return [
 		'secret' => '',
 	],
 
+    'bitbucket' => [
+        'client_id' => env('BITBUCKET_KEY'),
+        'client_secret' => env('BITBUCKET_SECRET'),
+        'team' => env('BITBUCKET_TEAM'),
+    ],
 ];

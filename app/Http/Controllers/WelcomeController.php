@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repositories\SourceRepository;
+
 class WelcomeController extends Controller {
 
 	/*
@@ -30,7 +32,10 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('frontend.home');
+        $r = new SourceRepository();
+        $r->get();
+
+		//return view('frontend.home');
 	}
 
 }
