@@ -18,6 +18,8 @@ class CoursesController extends Controller {
 
         list($coursetxt, $metadata) = $courseRepository->get($course, $version, $page);
 
+        $courses[$course] = array_diff($courses[$course], ['develop']);
+        
 		return view('frontend.course', [
             'currentVersion' => $version,
             'versions' => $courses[$course],
