@@ -64,6 +64,7 @@ class SourceRepository {
     }
 
     /**
+     * @param $repoFullName
      * @param $branch
      */
     public function download($repoFullName, $branch)

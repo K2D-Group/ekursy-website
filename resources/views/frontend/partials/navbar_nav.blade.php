@@ -1,16 +1,11 @@
-<?php
-    $manuals = ['a', 'b', 'c'];
-    $currentManual = 'b';
-    $versions = [1, 2, 3];
-    $currentVersion = 2;
-?><ul class="nav navbar-nav">
+<ul class="nav navbar-nav">
     @if (isset($currentManual))
         @if (count($manuals) > 1)
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span> {{ $currentManual }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     @foreach ($manuals as $manual)
-                        <li><a href="{{ url('/'.$manual) }}">{{ $manual }}</a> </li>
+                        <li><a href="{{ route('course', [$manual]) }}">{{ $manual }}</a> </li>
                     @endforeach
                 </ul>
             </li>
@@ -25,7 +20,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bookmark"></span> {{ $currentVersion }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     @foreach ($versions as $version)
-                        <li><a href="{{ url('/'.$currentManual.'/'. $version) }}">{{ $version }}</a> </li>
+                        <li><a href="{{ route('course', [$currentManual, $version]) }}">{{ $version }}</a> </li>
                     @endforeach
                 </ul>
             </li>
