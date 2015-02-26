@@ -7,12 +7,14 @@ use App\Repositories\SourceRepository;
 
 class CoursesController extends Controller {
 
-	public function index(CourseRepository $courseRepository, $course, $version = 'master', $page = '007 Odczyt i zapis plików - file')
+	public function index(CourseRepository $courseRepository, $course, $version = 'master', $page = 'toc')
 	{
         $courses = $courseRepository->getList();
 
         if(!isset($courses[$course]) || !in_array($version, $courses[$course]))
             abort(404);
+
+        $toc = $courseRepository->get($course, $version, 'toc');
 
         list($coursetxt, $metadata) = $courseRepository->get($course, $version, $page);
 
@@ -24,7 +26,8 @@ class CoursesController extends Controller {
             'date' => isset($metadata['date']) ? implode(', ', $metadata['date']) : null,
             'author' => isset($metadata['author']) ? implode(', ', $metadata['author']) : null,
             'reviewer' => isset($metadata['reviewer']) ? implode(', ', $metadata['reviewer']) : null,
-            'content' => $coursetxt
+            'content' => $coursetxt,
+            'toc' => $toc[0]
         ]);
 	}
 

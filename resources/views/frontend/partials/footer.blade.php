@@ -2,6 +2,6 @@
 
 <p class="pull-right">
     <small>
-        Powered by <a href="http://codex.caffeinated.ninja">Codex</a> 2.0
+        Copyright by <a href="http://ekursy.cf">K2D</a>
     </small>
 </p>

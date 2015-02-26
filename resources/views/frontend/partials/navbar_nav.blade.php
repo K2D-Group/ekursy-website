@@ -5,7 +5,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span> {{ $currentManual }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     @foreach ($manuals as $manual)
-                        <li><a href="{{ route('course', [$manual]) }}">{{ $manual }}</a> </li>
+                        <li><a href="{{ route('course', [$manual, 'master']) }}">{{ $manual }}</a> </li>
                     @endforeach
                 </ul>
             </li>

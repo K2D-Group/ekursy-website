@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/kurs/{course}/{version?}/{page?}', [
+Route::get('/kurs/{course}/{version}/{page?}', [
     'as' => 'course',
     'uses' => 'Frontend\CoursesController@index'
 ])->where('page', '(.*)');
@@ -21,9 +21,8 @@ Route::get('/kurs/{course}/{version?}/{page?}', [
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+//Route::controllers([
+//	'auth' => 'Auth\AuthController',
+//	'password' => 'Auth\PasswordController',
+//]);
