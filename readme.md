@@ -60,8 +60,56 @@
 		
 - Uruchom konfigurator i odpowiedz na pytania konfiguracyjne
 
-		./artisan config:env
+		./artisan config:env -d
 		
 - Wygeneruj nowy klucz bezpieczeństwa aplikacji
 
 		./artisan key:generate
+		
+## Dyrektywy konfiguracyjne
+
+
+- `APP_ENV` - Środowisko - do wyboru:
+	- `local` - środowisko testowe
+	- `production` - środowisko produkcyjne
+	
+- `APP_DEBUG` - Tryb debugowania - do wyboru:
+	- `true` - wyświetlane są błędy i pasek debugowania
+	- `false` - wyświetla tylko standardową informację o błędzie
+
+- `APP_KEY` - Klucz bezpieczeństwa aplikacji
+	
+- `DB_DRIVER` - Sterownik bazy danych - do wyboru:
+	- `sqlite` - SQLite 3
+	- `mysql` - MySQL
+
+- `DB_HOST` - Adres serwera MySQL
+
+- `DB_DATABASE` - Nazwa bazy danych
+
+- `DB_USERNAME` - Użytkownik
+
+- `DB_PASSWORD` - Hasło
+
+- `CACHE_DRIVER` - Sterownik pamięci podręcznej - do wyboru:
+	- `file` - Pliki
+	- `database` - Baza danych
+	- `array` - nic, czyli jedna wielka FIKCJA
+
+- `SESSION_DRIVER` - Sterownik pamięci podręcznej - do wyboru:
+	- `file` - Pliki
+	- `database` - Baza danych
+	- `cookie` - Ciasteczka
+	- `array` - nic, czyli jedna wielka FIKCJA
+
+- `QUEUE_DRIVER` - Sterownik mechanizmu kolejek - do wyboru:
+	- `sync` - Asynchroniczny - bez kolejkowania
+	- `database` - Baza danych
+	- `beanstalkd` - Serwer beanstalkd
+
+- `BITBUCKET_KEY` - BitBucket oAuth Key (do pobrania ze strony ustawień na BB w zakładce oAuth)
+
+- `BITBUCKET_SECRET` - BitBucket oAuth Secret (do pobrania ze strony ustawień na BB w zakładce oAuth)
+
+- `BITBUCKET_TEAM` - Nazwa grupy na której znajdują się repozytoria kursów. (w naszyp przypadku `k2d-team`)
+
