@@ -41,3 +41,27 @@
 - Uruchom środowisko używając komendy `homestead up`
 
 - Sprawdź czy działa domena `ekursy.local`
+
+## Instrukcja instalacji aplikacji
+
+- Sklonuj repozytorium GIT'a do docelowego folderu (np. `~/PHPProjects/ekursy.local`)
+
+		git clone git@bitbucket.org:k2d-team/strona-www.git
+		
+- Połącz się ze środowiskiem testowym i przejdź do folderu aplikacji
+
+		homestead ssh
+		cd Code/ekursy.local
+
+- Zainstaluj zależności projektu i nadaj uprawnienia uruchamiania dla pliku `artisan`
+
+		composer install
+		chmod +x artisan
+		
+- Uruchom konfigurator i odpowiedz na pytania konfiguracyjne
+
+		./artisan config:env
+		
+- Wygeneruj nowy klucz bezpieczeństwa aplikacji
+
+		./artisan key:generate
