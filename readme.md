@@ -1,3 +1,16 @@
+# Projekt
+
+## Przeznaczenie gałęzi `master`
+Gałąź (`branch`) `master` jest przeznaczona na kod produkcyjny - przetestowany i sprawdzony.
+Aktualna wersja deweloperska znajduję się w gałęzi `develop`.
+
+## Użyteczne informacje
+
+- Aby zaktualizować kursy z wersjami znajdującymi się na BitBucket'cie uruchom komendę `./artisan bitbucket:sync`
+
+
+# Instalacja i konfiguracja
+
 ## Instrukcja instalacji środowiska deweloperskiego
 
 - Zainstaluj poniższe programy:
