@@ -91,6 +91,8 @@ Aktualna wersja deweloperska znajduję się w gałęzi `develop`.
 	- `false` - wyświetla tylko standardową informację o błędzie
 
 - `APP_KEY` - Klucz bezpieczeństwa aplikacji
+
+- `APP_DOMAIN` - Domena aplikacji
 	
 - `DB_DRIVER` - Sterownik bazy danych - do wyboru:
 	- `sqlite` - SQLite 3
@@ -128,3 +130,6 @@ Aktualna wersja deweloperska znajduję się w gałęzi `develop`.
 
 - `BITBUCKET_TEAM` - Nazwa grupy na której znajdują się repozytoria kursów. (w naszyp przypadku `k2d-team`)
 
+- `FACEBOOK_KEY` - Facebook oAuth Key
+
+- `FACEBOOK_SECRET` - Facebook oAuth Secret

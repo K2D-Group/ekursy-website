@@ -38,5 +38,12 @@ return [
         'client_id' => env('BITBUCKET_KEY'),
         'client_secret' => env('BITBUCKET_SECRET'),
         'team' => env('BITBUCKET_TEAM'),
+        'redirect' => 'http://' . env('APP_DOMAIN', 'ekursy.local') . '/logowanie/bitbucket/redirect'
+    ],
+
+    'facebook' => [
+        'client_id' => env('FACEBOOK_KEY'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect' => 'http://' . env('APP_DOMAIN', 'ekursy.local') . '/logowanie/facebook/redirect'
     ],
 ];
