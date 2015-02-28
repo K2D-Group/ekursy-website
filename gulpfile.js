@@ -46,12 +46,7 @@ elixir(function(mix) {
     //    "codex.js"
     //], 'public/assets/codex.js', 'resources/assets/codex/js');
 
-    //mix.copy('resources/assets/codex/fonts', 'public/fonts');
     //mix.copy('resources/assets/codex/css/bootswatch/flatly.min.css', 'public/assets/bootswatch/flatly.min.css');
-
-
-
-
 
 
 
@@ -65,4 +60,8 @@ elixir(function(mix) {
         'public/assets/frontend.css',
         'public/assets/backend.css'
     ]);
+
+
+    mix.copy('resources/assets/less/backend-proui/fonts', 'public/assets/fonts');
+    mix.copy('resources/assets/less/backend-proui/fonts', 'public/build/assets/fonts');
 });
