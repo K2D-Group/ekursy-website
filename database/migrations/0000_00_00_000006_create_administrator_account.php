@@ -13,7 +13,7 @@ class CreateAdministratorAccount extends Migration {
 	 */
 	public function up()
 	{
-		$user = User::firstOrNew(['email'=>'root@localhost']);
+		$user = User::firstOrNew(['email'=>'krystian@muzik.pl']);
 		$user->name = 'Administrator';
 		$user->password = bcrypt('1234');
 		$user->save();

@@ -36,7 +36,7 @@ Route::get('/', 'WelcomeController@index');
 //Route::get('/aktywuj/{mailhash}/{token}.html', ['as' => 'auth.activate', 'uses' => 'Auth\AuthController@getActivate']);
 // Logowanie
 Route::get('/logowanie/', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@getLogin']);
-//Route::post('/logowanie.html', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@postLogin']);
+Route::post('/logowanie/', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@postLogin']);
 // Wylogowywanie
 Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout']);
 // Resetowanie hasła
