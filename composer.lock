@@ -2079,12 +2079,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kduma/socialite.git",
-                "reference": "994c4afd9a8594db31414d9e5cf6a0ffa6ec3f99"
+                "reference": "fee7e89cffe596f53bf3410a471f5b841c1c0b10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kduma/socialite/zipball/994c4afd9a8594db31414d9e5cf6a0ffa6ec3f99",
-                "reference": "994c4afd9a8594db31414d9e5cf6a0ffa6ec3f99",
+                "url": "https://api.github.com/repos/kduma/socialite/zipball/fee7e89cffe596f53bf3410a471f5b841c1c0b10",
+                "reference": "fee7e89cffe596f53bf3410a471f5b841c1c0b10",
                 "shasum": ""
             },
             "require": {
@@ -2127,7 +2127,7 @@
             "support": {
                 "source": "https://github.com/kduma/socialite/tree/2.0"
             },
-            "time": "2015-02-20 17:17:54"
+            "time": "2015-02-28 17:45:26"
         },
         {
             "name": "league/flysystem",
