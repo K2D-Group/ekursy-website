@@ -13,9 +13,9 @@ class CreateAdministratorAccount extends Migration {
 	 */
 	public function up()
 	{
-		$user = User::firstOrNew(['email'=>'krystian@muzik.pl']);
+		$user = User::firstOrNew(['email'=>'root@localhost']);
 		$user->name = 'Administrator';
-		$user->emailConfirmed = true;
+		$user->password = bcrypt('1234');
 		$user->save();
 
 
@@ -30,7 +30,7 @@ class CreateAdministratorAccount extends Migration {
 	 */
 	public function down()
 	{
-		$user = User::where('email', 'krystian@muzik.pl')->first();
+		$user = User::where('email', 'root@localhost')->first();
 		$user->delete();
 	}
 
