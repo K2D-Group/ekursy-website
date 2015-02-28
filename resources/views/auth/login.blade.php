@@ -6,7 +6,7 @@
     <div id="login-container">
         <!-- Login Title -->
         <div class="login-title text-center">
-            <h1><strong>Login</strong> or <strong>Register</strong></h1>
+            <h1><strong>Zaloguj się</strong> lub <strong>Zarejestruj</strong></h1>
         </div>
         <!-- END Login Title -->
 
@@ -14,7 +14,7 @@
         <div class="block push-bit">
             @if (count($errors) > 0)
             <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <strong>Błąd!</strong> Podane przez ciebie dane zawierają błąd. <br><br>
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -37,27 +37,35 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                            <input type="password" id="login-password" name="password" class="form-control input-lg" placeholder="Password">
+                            <input type="password" id="login-password" name="password" class="form-control input-lg" placeholder="Hasło">
                         </div>
                     </div>
                 </div>
                 <div class="form-group form-actions">
                     <div class="col-xs-4">
-                        <label class="switch switch-primary" data-toggle="tooltip" title="Remember Me?">
+                        <label class="switch switch-primary" data-toggle="tooltip" title="Zapamiętaj mnie?">
                             <input type="checkbox" id="login-remember-me" name="remember" checked>
                             <span></span>
                         </label>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Login to Dashboard</button>
+                        <a href="/" class="btn btn-sm btn-mutted"><i class="fa fa-angle-left"></i> Wróć</a>
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Zaloguj się</button>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12 text-center">
-                        <a href="javascript:void(0)" id="link-reminder-login"><small>Forgot password?</small></a> -
-                        <a href="javascript:void(0)" id="link-register-login"><small>Create a new account</small></a>
+                        Zaloguj się używając:
+                        <a href="{{ route('auth.login.social', ['facebook']) }}"><small>FaceBook'a</small></a>,
+                        <a href="{{ route('auth.login.social', ['bitbucket']) }}"><small>BitBucket</small></a>
                     </div>
                 </div>
+                {{--<div class="form-group">--}}
+                    {{--<div class="col-xs-12 text-center">--}}
+                        {{--<a href="javascript:void(0)" id="link-reminder-login"><small>Forgot password?</small></a> ---}}
+                        {{--<a href="javascript:void(0)" id="link-register-login"><small>Create a new account</small></a>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             </form>
             <!-- END Login Form -->
 
