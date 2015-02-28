@@ -140,10 +140,10 @@ return [
 		// Packages
 
 		'Barryvdh\Debugbar\ServiceProvider',
-		'Way\Generators\GeneratorsServiceProvider',
 		'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-
+        'Laracasts\Generators\GeneratorsServiceProvider',
+        
 		/*
 		 * Application Service Providers...
 		 */
