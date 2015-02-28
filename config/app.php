@@ -143,6 +143,7 @@ return [
 		'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Laracasts\Generators\GeneratorsServiceProvider',
+        'Laravel\Socialite\SocialiteServiceProvider',
         
 		/*
 		 * Application Service Providers...
@@ -209,7 +210,8 @@ return [
         'Form'               => 'Illuminate\Html\FormFacade',
         'HTML'               => 'Illuminate\Html\HtmlFacade',
 		'Permissions'        => 'KDuma\Permissions\Facades',
-		'PermissionsManager' => 'KDuma\Permissions\Facades\PermissionsManager'
+		'PermissionsManager' => 'KDuma\Permissions\Facades\PermissionsManager',
+        'Socialize' => 'Laravel\Socialite\Facades\Socialite',
 	],
 
 ];
