@@ -73,7 +73,7 @@ class AuthController extends Controller {
             $oauth->social_data = (array)$user_data;
 
             if(is_null($oauth->id) || is_null($oauth->user)){
-                $role = \App\Role::whereName('user')->firstOrFail();
+                $role = \App\Role::whereStrId('user')->firstOrFail();
                 if(!is_null($user_data->getEmail())){
                     $user = \App\User::firstOrNew(['email' => $user_data->getEmail()]);
                     $user->name = $user_data->getName();
@@ -100,7 +100,7 @@ class AuthController extends Controller {
         }catch(\Exception $e){
             \Log::alert($e->getMessage());
             \Debugbar::addException($e);
-            dd($e);
+//            dd($e);
             return redirect('/');
         }
     }
