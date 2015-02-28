@@ -20,6 +20,12 @@ class AuthController extends Controller {
 
 	use AuthenticatesAndRegistersUsers;
 
+
+    protected function getFailedLoginMesssage()
+    {
+        return 'Podane dane logowania są nieprawidłowe';
+    }
+
     /**
      * Create a new authentication controller instance.
      *
