@@ -36,7 +36,7 @@ class AuthController extends Controller {
 
 
 
-    public function redirectToProvider($social_provider)
+    public function socialLogin($social_provider)
     {
         switch($social_provider){
             case 'facebook':
@@ -46,7 +46,7 @@ class AuthController extends Controller {
         }
     }
 
-    public function handleProviderCallback($social_provider)
+    public function socialLoginCallback($social_provider)
     {
         try{
             $user_data = \Socialize::with($social_provider)->user();
