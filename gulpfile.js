@@ -51,17 +51,29 @@ elixir(function(mix) {
 
 
 
-
+    mix.scripts([
+        "vendor/jquery-1.11.2.min.js",
+        "vendor/bootstrap.min.js",
+        "plugins.js",
+        "app.js"
+    ], 'public/assets/backend-js/all.js', 'resources/assets/js/backend-proui/');
 
 
 
 
     mix.version([
         'public/assets/frontend.css',
-        'public/assets/backend.css'
+        'public/assets/backend.css',
+        'public/assets/backend-js/all.js'
     ]);
 
 
     mix.copy('resources/assets/less/backend-proui/fonts', 'public/assets/fonts');
     mix.copy('resources/assets/less/backend-proui/fonts', 'public/build/assets/fonts');
+
+
+    mix.copy('resources/assets/js/backend-proui/', 'public/assets/backend-js/');
+    mix.copy('resources/assets/js/frontend-proui/', 'public/assets/frontend-js/');
+
+
 });
