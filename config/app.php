@@ -212,6 +212,7 @@ return [
 		'Permissions'        => 'KDuma\Permissions\Facades',
 		'PermissionsManager' => 'KDuma\Permissions\Facades\PermissionsManager',
         'Socialize' => 'Laravel\Socialite\Facades\Socialite',
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
 	],
 
 ];
