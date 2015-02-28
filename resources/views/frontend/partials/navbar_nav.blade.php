@@ -28,4 +28,28 @@
             <li><p class="navbar-text"><span class="glyphicon glyphicon-bookmark"></span> {{ $currentVersion }}</p></li>
         @endif
     @endif
+
+</ul>
+
+<ul class="nav navbar-nav  pull-right">
+
+    @if(Auth::check())
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Witaj, <strong>{{ Auth::user()->name }}</strong>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ route('auth.logout') }}">Wyloguj się</a></li>
+            </ul>
+        </li>
+    @else
+        <li>
+            <p class="navbar-text">
+                <a href="{{ route('auth.login') }}">Zaloguj się</a>
+            </p>
+        </li>
+    @endif
+
+
 </ul>

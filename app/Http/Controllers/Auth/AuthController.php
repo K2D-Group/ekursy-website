@@ -20,13 +20,12 @@ class AuthController extends Controller {
 
 	use AuthenticatesAndRegistersUsers;
 
-	/**
-	 * Create a new authentication controller instance.
-	 *
-	 * @param  \Illuminate\Contracts\Auth\Guard  $auth
-	 * @param  \Illuminate\Contracts\Auth\Registrar  $registrar
-	 * @return void
-	 */
+    /**
+     * Create a new authentication controller instance.
+     *
+     * @param  \Illuminate\Contracts\Auth\Guard $auth
+     * @param  \Illuminate\Contracts\Auth\Registrar $registrar
+     */
 	public function __construct(Guard $auth, Registrar $registrar)
 	{
 		$this->auth = $auth;
@@ -34,5 +33,68 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
+
+
+
+    public function redirectToProvider($social_provider)
+    {
+        switch($social_provider){
+            case 'facebook':
+                return \Socialize::with($social_provider)->scopes(['email'])->redirect();
+            default:
+                return \Socialize::with($social_provider)->redirect();
+        }
+    }
+
+    public function handleProviderCallback($social_provider)
+    {
+        try{
+            $user_data = \Socialize::with($social_provider)->user();
+
+            switch($social_provider){
+                case 'facebook':
+                    if(is_null($user_data->email))
+                        return redirect()->route('auth.login.social.redirect', [$social_provider]);
+            }
+
+            $oauth = \App\UserOauth::firstOrNew([
+                'social_provider' => strtolower($social_provider),
+                'social_id' => $user_data->id
+            ]);
+            $oauth->social_data = (array)$user_data;
+
+            if(is_null($oauth->id) || is_null($oauth->user)){
+                $role = \App\Role::whereName('user')->firstOrFail();
+                if(!is_null($user_data->getEmail())){
+                    $user = \App\User::firstOrNew(['email' => $user_data->getEmail()]);
+                    $user->name = $user_data->getName();
+                    $user->nickname = $user_data->getNickname();
+                    $user->avatar = $user_data->getAvatar();
+                    $user->save();
+                }else {
+                    $user = new \App\User;
+                    $user->email = $user_data->getEmail();
+                    $user->name = $user_data->getName();
+                    $user->nickname = $user_data->getNickname();
+                    $user->avatar = $user_data->getAvatar();
+                    $user->save();
+                }
+                $user->roles()->sync([$role->id], false);
+            }else{
+                $user = $oauth->user;
+            }
+            $user->oauth()->save($oauth);
+
+            \Auth::loginUsingId($user->id);
+            return redirect('/');
+
+        }catch(\Exception $e){
+            \Log::alert($e->getMessage());
+            \Debugbar::addException($e);
+            dd($e);
+            return redirect('/');
+        }
+    }
+
 
 }

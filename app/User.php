@@ -25,6 +25,15 @@ use \KDuma\Permissions\Permissions;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @property string $nickname
+ * @property string $avatar
+ * @property string $social_id
+ * @property string $social_data
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\UserOauth[] $oauth
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereNickname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAvatar($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereSocialId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereSocialData($value)
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -42,7 +51,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'email', 'password'];
+	protected $fillable = ['name', 'email', 'password', 'social_id'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -50,5 +59,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $hidden = ['password', 'remember_token'];
+
+
+    public function oauth()
+    {
+        return $this->hasMany('\App\UserOauth');
+    }
 
 }
