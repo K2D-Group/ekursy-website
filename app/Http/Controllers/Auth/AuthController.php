@@ -57,7 +57,7 @@ class AuthController extends Controller {
             switch($social_provider){
                 case 'facebook':
                     if(is_null($user_data->email))
-                        return redirect()->route('auth.login.social.redirect', [$social_provider]);
+                        return redirect()->route('auth.login.social', [$social_provider]);
             }
 
             $oauth = \App\UserOauth::firstOrNew([
