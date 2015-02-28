@@ -104,6 +104,8 @@ Aktualna wersja deweloperska znajduję się w gałęzi `develop`.
 
 - `DB_PASSWORD` - Hasło
 
+- `DB_PREFIX` - Prefix dla nazw tabeli (może być puste)
+
 - `CACHE_DRIVER` - Sterownik pamięci podręcznej - do wyboru:
 	- `file` - Pliki
 	- `database` - Baza danych
