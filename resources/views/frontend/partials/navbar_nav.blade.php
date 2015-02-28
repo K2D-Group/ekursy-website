@@ -45,9 +45,7 @@
         </li>
     @else
         <li>
-            <p class="navbar-text">
-                <a href="{{ route('auth.login') }}">Zaloguj się</a>
-            </p>
+            <a href="{{ route('auth.login') }}">Zaloguj się</a>
         </li>
     @endif
 
