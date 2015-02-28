@@ -12,7 +12,10 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    //mix.less('app.less');
+    mix.less([
+        'backend-proui/backend.less',
+        'frontend-proui/frontend.less'
+    ], 'public/assets/');
 
     //mix.styles([
     //    "bootstrap.min.css",
@@ -58,10 +61,8 @@ elixir(function(mix) {
 
 
 
-    //mix.version([
-    //    'public/assets/frontend-proui.css',
-    //    'public/assets/backend-proui.css',
-    //    'public/assets/codex.css',
-    //    'public/assets/codex.js'
-    //]);
+    mix.version([
+        'public/assets/frontend.css',
+        'public/assets/backend.css'
+    ]);
 });
