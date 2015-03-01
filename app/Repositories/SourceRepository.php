@@ -71,7 +71,7 @@ class SourceRepository {
                     $l->authors = isset($prased[1]['author']) ? $prased[1]['author'] : [];
                     $l->reviewers = isset($prased[1]['reviewer']) ? $prased[1]['reviewer'] : [];
                     $l->updates = isset($prased[1]['date']) ? $prased[1]['date'] : [];
-                    
+
                     $l->sources = [];
                     if(isset($prased[1]['source'])){
                         foreach ($prased[1]['source'] as $key=>$val) {
@@ -142,9 +142,6 @@ class SourceRepository {
     public function download($repoFullName, $branch)
     {
         $prased = [];
-        $repoName = explode('/', $repoFullName);
-        $repoName = $repoName[1];
-
         $temporary_name = $this->getTempName();
         $response = $this->client->get('https://bitbucket.org/' . $repoFullName . '/get/' . $branch . '.zip', ['auth' => 'oauth']);
         file_put_contents($temporary_name, $response->getBody());
@@ -152,8 +149,6 @@ class SourceRepository {
         if ($zip) {
             while ($zip_entry = zip_read($zip)) {
                 $file_name = zip_entry_name($zip_entry);
-                $file_name = explode('/', $file_name, 2);
-//                $file_name = $repoName.'/'.$branch.'/'.$file_name[1];
                 $file_name = $file_name[1];
 
                 if (substr($file_name, '-1') != '/' && $file_name != '') {
@@ -170,7 +165,6 @@ class SourceRepository {
                 }
             }
         }
-
         return($prased);
     }
 }
