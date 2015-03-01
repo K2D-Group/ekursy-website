@@ -8,9 +8,9 @@
         <link rel="icon" href="{{ asset('/favicon.ico') }}" type="image/x-icon">
 
         @if (isset($title))
-            <title>{{ $title }} - K2D</title>
+            <title>{{ $title }} - {{ Config::get('app.name.full') }}</title>
         @else
-            <title>K2D</title>
+            <title>{{ Config::get('app.name.full') }}</title>
         @endif
 
         {{--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round">--}}
