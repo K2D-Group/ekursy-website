@@ -34,4 +34,9 @@ class Course extends Model {
      * @var array
      */
     protected $fillable = ['slug', 'name', 'last_update'];
+
+
+    function lessons(){
+        return $this->hasMany('\App\CourseLesson', 'course_id');
+    }
 }

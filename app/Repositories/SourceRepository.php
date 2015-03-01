@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 use App\Course;
+use App\CourseLesson;
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
@@ -22,12 +23,15 @@ class SourceRepository {
     public function get()
     {
         $only_existing_courses = [];
+        $only_existing_lessons = [];
         foreach ($this->getRepositoriesList() as $repo) {
             if(substr($repo['name'], 0, 7) != 'Kurs - ')
                 continue;
 
             $branches = $this->getBranches($repo['full_name']);
             foreach ($branches as $branch_name => $branch) {
+                if(substr($branch_name, 0, 1) != 'v' && $branch_name != 'develop')
+                    continue;
                 $slug = explode('/', $repo['full_name'], 2);
                 $slug = $slug[1];
 //                $slug = $repo['full_name'];
@@ -40,23 +44,34 @@ class SourceRepository {
                     $Course->slug = $slug;
                     $Course->version = $branch_name;
                 }
-                $only_existing_courses[] = [$slug, $branch_name];
                 $Course->name = $repo['name'];
                 $Course->save();
+                $only_existing_courses[] = $Course->id;
 
 
 
-                $this->download($repo['full_name'], $branch_name);
+                $lessons = $this->download($repo['full_name'], $branch_name);
+
+                foreach($lessons['course'] as $s=>$lesson){
+                    try{
+                        $l = CourseLesson::whereSlug($s)->whereCourseId($Course->id)->withTrashed()->firstOrFail();
+                        $l->restore();
+                    }catch (\Exception $e){
+                        $l = new CourseLesson();
+                        $l->slug = $s;
+                        $l->course_id = $Course->id;
+                    }
+                    $l->name = $lesson;
+                    $l->save();
+                    $only_existing_lessons[] = $l->id;
+                }
+
             }
         }
 
 
-        //Kasowanie pozostałych kursów
-        $x = Course::withTrashed();
-        foreach ($only_existing_courses as $c) {
-            $x->WhereRaw('NOT (slug = ? and version = ?)', $c);
-        }
-        $x->delete();
+        CourseLesson::whereNotIn('id', $only_existing_lessons)->delete();
+        Course::whereNotIn('id', $only_existing_courses)->delete();
     }
 
     public function getRepositoriesList()
