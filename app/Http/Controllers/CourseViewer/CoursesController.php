@@ -10,20 +10,71 @@ class CoursesController extends Controller {
 
 	public function index(CourseRepository $courseRepository, $course_name, $current_version = 'master', $page = 'toc')
 	{
-        $course = Course::whereSlug($course_name)->whereVersion($current_version)->first();
-        if(is_null($course))
-            abort(404);
+        if(\Auth::check() && \Permissions::can('course.devversion')){
+            $course = \Cache::remember('course.develop.'.$course_name.'.'.$current_version, 5, function() use ($course_name, $current_version)
+            {
+                return Course::whereSlug($course_name)->whereVersion($current_version)->first();
+            });
 
-        $toc = $courseRepository->get($course->lessons()->whereSlug('toc')->firstOrFail());
+            if(is_null($course))
+                abort(404);
 
-        $current_lesson = $course->lessons()->whereSlug($page)->first();
+            $courses_list = \Cache::remember('courses_list.develop', 5, function()
+            {
+                return Course::groupBy('slug')->orderBy('name', 'asc')->get()->lists('name', 'slug');
+            });
+
+            $versions_list = \Cache::remember('versions_list.develop.'.$course_name, 5, function() use ($course_name)
+            {
+                return Course::whereSlug($course_name)->orderBy('version', 'asc')->get()->lists('version', 'version');
+            });
+
+            $toc = \Cache::remember('course.toc.'.$course_name.'.'.$current_version, 5, function() use ($courseRepository, $course)
+            {
+                return $courseRepository->get($course->lessons()->whereSlug('toc')->firstOrFail());
+            });
+
+            $current_lesson = \Cache::remember('course.page.'.$course_name.'.'.$current_version.'.'.$page, 5, function() use ($course, $page)
+            {
+                return $course->lessons()->whereSlug($page)->with('course')->first();
+            });
+        }else{
+            $course = \Cache::remember('course.'.$course_name.'.'.$current_version, 60*12, function() use ($course_name, $current_version)
+            {
+                return Course::where('version', '!=', 'develop')->whereSlug($course_name)->whereVersion($current_version)->first();
+            });
+
+            if(is_null($course))
+                abort(404);
+
+            $courses_list = \Cache::remember('courses_list', 60*12, function()
+            {
+                return Course::where('version', '!=', 'develop')->groupBy('slug')->orderBy('name', 'asc')->get()->lists('name', 'slug');
+            });
+
+            $versions_list = \Cache::remember('versions_list.'.$course_name, 60*12, function() use ($course_name)
+            {
+                return Course::where('version', '!=', 'develop')->whereSlug($course_name)->orderBy('version', 'asc')->get()->lists('version', 'version');
+            });
+
+            $toc = \Cache::remember('course.toc.'.$course_name.'.'.$current_version, 60*12, function() use ($courseRepository, $course)
+            {
+                return $courseRepository->get($course->lessons()->whereSlug('toc')->firstOrFail());
+            });
+
+            $current_lesson = \Cache::remember('course.page.'.$course_name.'.'.$current_version.'.'.$page, 60*12, function() use ($course, $page)
+            {
+                return $course->lessons()->whereSlug($page)->with('course')->first();
+            });
+        }
+
+
+
         list($content, $metadata) = $courseRepository->get($current_lesson);
 
         if(is_null($content))
             abort(404);
 
-        $courses_list = Course::where('version', '!=', 'develop')->groupBy('slug')->orderBy('name', 'asc')->get()->lists('name', 'slug');
-        $versions_list = Course::where('version', '!=', 'develop')->whereSlug($course_name)->orderBy('version', 'asc')->get()->lists('version', 'version');
 
         if(!empty($current_lesson->sources))
         {
