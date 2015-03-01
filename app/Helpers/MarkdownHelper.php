@@ -1,8 +1,7 @@
 <?php
 namespace App\Helpers;
 
-use Kurenai\DocumentParser;
-use Parsedown;
+use ParsedownExtra;
 
 class MarkdownHelper
 {
@@ -10,7 +9,7 @@ class MarkdownHelper
     {
         list($parsed, $metadata) = self::parseMeta($text);
         $basePath = $pathPrefix;
-        $rendered = (new Parsedown)->text($parsed);
+        $rendered = (new ParsedownExtra)->text($parsed);
 
         // Replace absolute relative paths (paths that start with / but not //)
         $rendered = preg_replace('/href=\"(\/[^\/].+?).md(#?.*?)\"/', "href=\"$basePath$1$2\"", $rendered);
