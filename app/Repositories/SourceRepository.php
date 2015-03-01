@@ -86,7 +86,7 @@ class SourceRepository {
                     \Storage::disk('local')->makeDirectory($file_name);
                 } else {
                     if (zip_entry_open($zip, $zip_entry)) {
-                        $contents = zip_entry_read($zip_entry);
+                        $contents = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
                         \Storage::disk('local')->put($file_name, $contents);
                         zip_entry_close($zip_entry);
                     }
