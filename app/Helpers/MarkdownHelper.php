@@ -1,8 +1,6 @@
 <?php
 namespace App\Helpers;
 
-use Kurenai\DocumentParser;
-use Parsedown;
 use ParsedownExtra;
 
 class MarkdownHelper
