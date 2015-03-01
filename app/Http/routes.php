@@ -15,7 +15,10 @@ Route::get('/kurs/{course}/{version}/{page?}', [
     'as' => 'course',
     'uses' => 'CourseViewer\CoursesController@index'
 ])->where('page', '(.*)');
-
+Route::get('/pdf/{course}/{version}', [
+    'as' => 'course.pdf',
+    'uses' => 'CourseViewer\PDFController@get'
+]);
 
 
 
