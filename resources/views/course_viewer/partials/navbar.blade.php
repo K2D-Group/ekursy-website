@@ -20,10 +20,10 @@
         </div>
 
         <div id="navbar" class="collapse navbar-collapse">
-            @include('frontend.partials.navbar_nav')
+            @include('course_viewer.partials.navbar_nav')
 
             {{--@if (true)--}}
-                {{--@include('frontend.partials.search_form')--}}
+                {{--@include('course_viewer.partials.search_form')--}}
             {{--@endif--}}
         </div>
     </div>

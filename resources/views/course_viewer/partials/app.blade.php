@@ -26,9 +26,9 @@
     </head>
     <body>
         {{--@include('partials.analytics_tracking')--}}
-        @include('frontend.partials.navbar')
+        @include('course_viewer.partials.navbar')
         <div id="wrapper">
-            @include('frontend.partials.sidebar')
+            @include('course_viewer.partials.sidebar')
 
             <div id="page-content-wrapper">
                 <div class="container-fluid">

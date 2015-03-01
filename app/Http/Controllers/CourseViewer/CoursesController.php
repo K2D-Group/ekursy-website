@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Frontend;
+<?php namespace App\Http\Controllers\CourseViewer;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\CourseRepository;
@@ -36,7 +36,7 @@ class CoursesController extends Controller {
         }
 
 
-		return view('frontend.course', [
+		return view('course_viewer.course', [
             'currentVersion' => $version,
             'versions' => $courses[$course],
             'currentManual' => $course,

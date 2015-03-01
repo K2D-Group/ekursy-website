@@ -13,7 +13,7 @@
 
 Route::get('/kurs/{course}/{version}/{page?}', [
     'as' => 'course',
-    'uses' => 'Frontend\CoursesController@index'
+    'uses' => 'CourseViewer\CoursesController@index'
 ])->where('page', '(.*)');
 
 
