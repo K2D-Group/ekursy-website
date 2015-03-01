@@ -16,7 +16,17 @@ class CoursesController extends Controller {
 
         $toc = $courseRepository->get($course, $version, 'toc');
 
+
+
+
         list($coursetxt, $metadata) = $courseRepository->get($course, $version, $page);
+
+        if($coursetxt === false)
+            abort(404);
+
+
+
+
 
         $courses[$course] = array_diff($courses[$course], ['develop']);
 
