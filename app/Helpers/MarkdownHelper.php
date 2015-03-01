@@ -1,8 +1,7 @@
 <?php
 namespace App\Helpers;
 
-use Kurenai\DocumentParser;
-use Parsedown;
+use ParsedownExtra;
 
 class MarkdownHelper
 {
@@ -10,7 +9,7 @@ class MarkdownHelper
     {
         list($parsed, $metadata) = self::parseMeta($text);
         $basePath = $pathPrefix;
-        $rendered = (new Parsedown)->text($parsed);
+        $rendered = (new ParsedownExtra)->text($parsed);
 
         // Replace absolute relative paths (paths that start with / but not //)
         $rendered = preg_replace('/href=\"(\/[^\/].+?).md(#?.*?)\"/', "href=\"$basePath$1$2\"", $rendered);
@@ -46,11 +45,19 @@ class MarkdownHelper
             $last_key = null;
             foreach ($metadata as $line) {
                 if(preg_match("/^([A-Za-z0-9][A-Za-z0-9 ]*):[\\t ]*([^\\n]*)$/us", $line, $matches)){
-                    $metadata_list[$matches[1]][] = $matches[2];
+                    $kv = explode(' => ', $matches[2], 2);
+                    if(count($kv) == 1)
+                        $metadata_list[$matches[1]][] = $kv[0];
+                    else
+                        $metadata_list[$matches[1]][$kv[0]] = $kv[1];
                     $last_key = $matches[1];
                     $found = true;
                 }elseif($found == true && preg_match("/^[\\t ]*([^\\n]*)$/us", $line, $matches)){
-                    $metadata_list[$last_key][] = $matches[1];
+                    $kv = explode(' => ', $matches[1], 2);
+                    if(count($kv) == 1)
+                        $metadata_list[$last_key][] = $kv[0];
+                    else
+                        $metadata_list[$last_key][$kv[0]] = $kv[1];
                 }elseif($found == false){
                     $metadata = null;
                     $content = $lines;

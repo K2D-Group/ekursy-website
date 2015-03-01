@@ -16,9 +16,15 @@
                         </span>
                     @endif
 
-                    @if(!is_null($date))
+                    @if(!is_null($date) || !is_null($sources))
                         <span class="pull-right">
-                            <small>{{ $date }}</small>
+                            @if(!is_null($sources))
+                                <small>Źródła: <b>{!! $sources !!}</b></small>
+                            @endif
+
+                            @if(!is_null($date))
+                                <small>Aktualizacje: <b>{{ $date }}</b></small>
+                            @endif
                         </span>
                     @endif
                 </p>
