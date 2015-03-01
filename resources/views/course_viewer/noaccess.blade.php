@@ -41,6 +41,9 @@
             <a href="{{ route('auth.login.social', ['facebook', 'return' => Request::url()]) }}">
                 <img src="{{ asset('images/login_fb.png') }}" width="{{ 649/2.5 }}" height="{{ 138/2.5 }}" class="dont-bootstrap" style="padding: 10px"/>
             </a>
+            <a href="{{ route('auth.login.social', ['bitbucket', 'return' => Request::url()]) }}">
+                <img src="{{ asset('images/login_bb.png') }}" width="{{ 649/2.5 }}" height="{{ 138/2.5 }}" class="dont-bootstrap" style="padding: 10px"/>
+            </a>
         </p>
         @include('course_viewer.partials.footer')
     </div>

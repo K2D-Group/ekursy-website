@@ -47,6 +47,6 @@ Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@get
 
 // Logowanie BitBucket i Facebook
 Route::get('/logowanie/{social_provider}', ['as' => 'auth.login.social', 'uses' => 'Auth\AuthController@socialLogin'])
-    ->where('social_provider', 'facebook');
+    ->where('social_provider', 'bitbucket|facebook');
 Route::get('/logowanie/{social_provider}/redirect', ['as' => 'auth.login.social.redirect', 'uses' => 'Auth\AuthController@socialLoginCallback'])
-    ->where('social_provider', 'facebook');
+    ->where('social_provider', 'bitbucket|facebook');

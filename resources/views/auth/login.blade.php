@@ -61,6 +61,9 @@
                         <a href="{{ route('auth.login.social', ['facebook', 'return' => Request::url()]) }}">
                             <img src="{{ asset('images/login_fb.png') }}" style="height: {{ 138/3 }}px; width: {{ 648/3 }}px; "/>
                         </a>
+                        <a href="{{ route('auth.login.social', ['bitbucket', 'return' => Request::url()]) }}">
+                            <img src="{{ asset('images/login_bb.png') }}" style="height: {{ 138/3 }}px; width: {{ 648/3 }}px; "/>
+                        </a>
                     </div>
                 </div>
                 {{--<div class="form-group">--}}
