@@ -8,9 +8,9 @@
         <link rel="icon" href="{{ asset('/favicon.ico') }}" type="image/x-icon">
 
         @if (isset($title))
-            <title>{{ $title }} - K2D</title>
+            <title>{{ $title }} - {{ Config::get('app.name.full') }}</title>
         @else
-            <title>K2D</title>
+            <title>{{ Config::get('app.name.full') }}</title>
         @endif
 
         {{--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round">--}}
@@ -26,9 +26,9 @@
     </head>
     <body>
         {{--@include('partials.analytics_tracking')--}}
-        @include('frontend.partials.navbar')
+        @include('course_viewer.partials.navbar')
         <div id="wrapper">
-            @include('frontend.partials.sidebar')
+            @include('course_viewer.partials.sidebar')
 
             <div id="page-content-wrapper">
                 <div class="container-fluid">

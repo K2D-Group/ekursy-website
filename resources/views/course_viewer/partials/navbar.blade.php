@@ -9,7 +9,7 @@
             </button>
 
 			<span class="navbar-brand">
-				<a href="/">K2D</a>
+				<a href="/">{{ Config::get('app.name.short') }}</a>
 
 				<div class="pull-right">
                     <button type="button" data-toggle="offcanvas">
@@ -19,11 +19,11 @@
 			</span>
         </div>
 
-        <div id="navbar" class="collapse navbar-collapse">
-            @include('frontend.partials.navbar_nav')
+        <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+            @include('course_viewer.partials.navbar_nav')
 
             {{--@if (true)--}}
-                {{--@include('frontend.partials.search_form')--}}
+                {{--@include('course_viewer.partials.search_form')--}}
             {{--@endif--}}
         </div>
     </div>

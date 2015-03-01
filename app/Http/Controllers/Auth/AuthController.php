@@ -4,6 +4,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Input;
+use Session;
 
 class AuthController extends Controller {
 
@@ -19,6 +21,20 @@ class AuthController extends Controller {
 	*/
 
 	use AuthenticatesAndRegistersUsers;
+
+    /**
+     * Show the application login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLogin()
+    {
+        if (Input::has('return'))
+        {
+            Session::put('url.intended', Input::get('return'));
+        }
+        return view('auth.login');
+    }
 
 
     protected function getFailedLoginMesssage()
@@ -47,6 +63,10 @@ class AuthController extends Controller {
 
     public function socialLogin($social_provider)
     {
+        if (Input::has('return'))
+        {
+            Session::flash('return', Input::get('return'));
+        }
         switch($social_provider){
             case 'facebook':
                 return \Socialize::with($social_provider)->scopes(['email'])->redirect();
@@ -62,8 +82,10 @@ class AuthController extends Controller {
 
             switch($social_provider){
                 case 'facebook':
-                    if(is_null($user_data->email))
+                    if(is_null($user_data->email)){
+                        Session::reflash();
                         return redirect()->route('auth.login.social', [$social_provider]);
+                    }
             }
 
             $oauth = \App\UserOauth::firstOrNew([
@@ -95,13 +117,20 @@ class AuthController extends Controller {
             $user->oauth()->save($oauth);
 
             \Auth::loginUsingId($user->id);
-            return redirect('/');
+
+
+            if (Session::has('return'))
+                return redirect(Session::get('return'));
+            else
+                return redirect('/');
+
+
 
         }catch(\Exception $e){
             \Log::alert($e->getMessage());
             \Debugbar::addException($e);
 //            dd($e);
-            return redirect('/');
+            return redirect(route('auth.login'));
         }
     }
 

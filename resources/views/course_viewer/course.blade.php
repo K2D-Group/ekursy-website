@@ -1,4 +1,4 @@
-@extends('frontend.partials.app')
+@extends('course_viewer.partials.app')
 
 @section('content')
     <div class="col-lg-12 documentation">
@@ -33,6 +33,6 @@
 
         {!! $content !!}
 
-        @include('frontend.partials.footer')
+        @include('course_viewer.partials.footer')
     </div>
 @stop

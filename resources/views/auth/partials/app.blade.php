@@ -6,9 +6,9 @@
     <meta charset="utf-8">
 
     @if (isset($title))
-        <title>{{ $title }} - K2D</title>
+        <title>{{ $title }} - {{ Config::get('app.name.full') }}</title>
     @else
-        <title>K2D</title>
+        <title>{{ Config::get('app.name.full') }}</title>
     @endif
 
     <meta name="robots" content="noindex, nofollow">
@@ -42,7 +42,7 @@
             <div id="login-alt-container">
                 <!-- Title -->
                 <h1 class="push-top-bottom">
-                    <strong>LOGO K2D</strong><br>
+                    <strong>{{ Config::get('app.name.full') }}</strong><br>
                     <small>TU SLOGAN ORAZ CO OFERUJEMY</small>
                 </h1>
                 <!-- END Title -->
@@ -64,7 +64,13 @@
 
                 <!-- Footer -->
                 <footer class="text-muted push-top-bottom">
-                    <small>2015&copy; <a href="http://ekursy.cf/k2d" target="_blank">K2D</a></small>
+                    <small>
+                        {{ Config::get('app.copyright.year') }}
+                        &copy;
+                        <a href="{{ Config::get('app.copyright.url') }}" target="_blank">
+                            {{ Config::get('app.copyright.name') }}
+                        </a>
+                    </small>
                 </footer>
                 <!-- END Footer -->
             </div>

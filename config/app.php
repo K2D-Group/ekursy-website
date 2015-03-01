@@ -2,6 +2,20 @@
 
 return [
 
+    'name' => [
+        'short' => 'K2D',
+        'full' => 'K2D'
+    ],
+
+    'copyright' => [
+        'year' => '2015',
+        'name' => 'K2D',
+        'url' => 'http://ekursy.cf/'
+    ],
+
+    'version' => '1.3',
+
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode

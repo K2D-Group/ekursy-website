@@ -55,9 +55,12 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12 text-center">
-                        Zaloguj się używając:
-                        <a href="{{ route('auth.login.social', ['facebook']) }}"><small>FaceBook'a</small></a>,
-                        <a href="{{ route('auth.login.social', ['bitbucket']) }}"><small>BitBucket</small></a>
+                        {{--Zaloguj się używając:--}}
+                        {{--<a href="{{ route('auth.login.social', ['facebook']) }}"><small>FaceBook'a</small></a>,--}}
+                        {{--<a href="{{ route('auth.login.social', ['bitbucket']) }}"><small>BitBucket</small></a>--}}
+                        <a href="{{ route('auth.login.social', ['facebook', 'return' => Request::url()]) }}">
+                            <img src="{{ asset('images/login_fb.png') }}" style="height: {{ 138/3 }}px; width: {{ 648/3 }}px; "/>
+                        </a>
                     </div>
                 </div>
                 {{--<div class="form-group">--}}
