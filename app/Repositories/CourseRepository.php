@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 
+use App\CourseLesson;
 use App\Helpers\MarkdownHelper;
 use Storage;
 
@@ -19,15 +20,8 @@ class CourseRepository {
         return $courses;
     }
 
-    function get($course, $version, $page){
-        $path = '/'.$course.'/'.$version.'/'.$page.'.md';
-
-        if (!Storage::disk('local')->exists($path))
-            return false;
-
-        $markdown = Storage::disk('local')->get($path);
-
-        return MarkdownHelper::parse($markdown, route('course', [$course, $version]));
+    function get(CourseLesson $lesson){
+        return MarkdownHelper::parse($lesson->content, route('course', [$lesson->course->slug, $lesson->course->version]));
     }
     
 }
