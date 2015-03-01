@@ -48,7 +48,7 @@ class CoursesController extends Controller {
         return view($view, [
             'currentVersion' => $current_version,
             'versions' => $versions_list,
-            'currentManual' => $course->name,
+            'currentManual' => $course->slug,
             'manuals' => $courses_list,
             'title' => $current_lesson->name,
             'date' => !empty($current_lesson->updates) ? implode(', ', $current_lesson->updates) : null,
