@@ -72,24 +72,33 @@ class SourceRepository {
                     $l->reviewers = isset($prased[1]['reviewer']) ? $prased[1]['reviewer'] : [];
                     $l->updates = isset($prased[1]['date']) ? $prased[1]['date'] : [];
 
-                    $l->sources = [];
-                    if(isset($prased[1]['source'])){
-                        foreach ($prased[1]['source'] as $key=>$val) {
-                            if(is_numeric($key)){
-                                $l->sources[$val] = null;
-                            }else{
-                                $l->sources[$key] = $val;
-                            }
-                        }
-                    }
 
                     try{
                         $l->last_update = isset($prased[1]['date']) ? new \Carbon\Carbon(end($prased[1]['date'])) : null;
                     }catch(\Exception $e){
                         $l->last_update = null;
                     }
-
+                    $l->sources = [];
                     $l->save();
+
+
+                    $sources = [];
+                    if(isset($prased[1]['source']) && !empty($prased[1]['source'])){
+                        foreach ($prased[1]['source'] as $key=>$val) {
+                            if(is_numeric($key)){
+                                $sources[$val] = null;
+                            }else{
+                                $sources[$key] = $val;
+                            }
+                        }
+
+                        $l->sources &= $sources;
+                    }
+                    $l->save();
+
+
+
+
                     $only_existing_lessons[] = $l->id;
                 }
 
@@ -149,8 +158,8 @@ class SourceRepository {
         if ($zip) {
             while ($zip_entry = zip_read($zip)) {
                 $file_name = zip_entry_name($zip_entry);
+                $file_name = explode('/', $file_name, 2);
                 $file_name = $file_name[1];
-
                 if (substr($file_name, '-1') != '/' && $file_name != '') {
 
                     if (zip_entry_open($zip, $zip_entry)) {
@@ -165,6 +174,7 @@ class SourceRepository {
                 }
             }
         }
+
         return($prased);
     }
 }
