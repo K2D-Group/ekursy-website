@@ -13,7 +13,7 @@ return [
         'url' => 'http://ekursy.cf/'
     ],
 
-    'version' => '1.3',
+    'version' => '1.4',
 
 
 	/*
@@ -223,7 +223,7 @@ return [
 		'View'               => 'Illuminate\Support\Facades\View',
         'Form'               => 'Illuminate\Html\FormFacade',
         'HTML'               => 'Illuminate\Html\HtmlFacade',
-		'Permissions'        => 'KDuma\Permissions\Facades',
+		'Permissions'        => 'KDuma\Permissions\Facades\Permissions',
 		'PermissionsManager' => 'KDuma\Permissions\Facades\PermissionsManager',
         'Socialize' => 'Laravel\Socialite\Facades\Socialite',
         'Debugbar' => 'Barryvdh\Debugbar\Facade',

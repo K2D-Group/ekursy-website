@@ -6,7 +6,7 @@ class WelcomeController extends Controller {
 
 	public function index()
 	{
-        return redirect()->route('course', ['kurs-php', 'master']);
+        return redirect()->route('course', ['kurs-php', 'v1']);
 	}
 
 }
