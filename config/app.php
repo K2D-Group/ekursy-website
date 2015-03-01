@@ -2,6 +2,20 @@
 
 return [
 
+    'name' => [
+        'short' => 'K2D',
+        'full' => 'K2D'
+    ],
+
+    'copyright' => [
+        'year' => '2015',
+        'name' => 'K2D',
+        'url' => 'http://ekursy.cf/'
+    ],
+
+    'version' => '1.4.2',
+
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
@@ -209,7 +223,7 @@ return [
 		'View'               => 'Illuminate\Support\Facades\View',
         'Form'               => 'Illuminate\Html\FormFacade',
         'HTML'               => 'Illuminate\Html\HtmlFacade',
-		'Permissions'        => 'KDuma\Permissions\Facades',
+		'Permissions'        => 'KDuma\Permissions\Facades\Permissions',
 		'PermissionsManager' => 'KDuma\Permissions\Facades\PermissionsManager',
         'Socialize' => 'Laravel\Socialite\Facades\Socialite',
         'Debugbar' => 'Barryvdh\Debugbar\Facade',

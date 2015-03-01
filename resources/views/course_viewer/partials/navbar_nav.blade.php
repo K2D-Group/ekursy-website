@@ -1,21 +1,21 @@
 <ul class="nav navbar-nav">
     @if (isset($currentManual))
-        @if (count($manuals) > 1)
+{{--        @if (count($manuals) > 1)--}}
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span> {{ $currentManual }} <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span> {{ $manuals[$currentManual] }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    @foreach ($manuals as $manual)
-                        <li><a href="{{ route('course', [$manual, 'master']) }}">{{ $manual }}</a> </li>
+                    @foreach ($manuals as $id=>$manual)
+                        <li><a href="{{ route('course', [$id, 'v1']) }}">{{ $manual }}</a> </li>
                     @endforeach
                 </ul>
             </li>
-        @else
-            <li><p class="navbar-text"><span class="glyphicon glyphicon-book"></span> {{ $currentManual }}</p></li>
-        @endif
+        {{--@else--}}
+            {{--<li><p class="navbar-text"><span class="glyphicon glyphicon-book"></span> {{ $manuals[$currentManual] }}</p></li>--}}
+        {{--@endif--}}
     @endif
 
     @if (isset($currentVersion))
-        @if (count($versions) > 1)
+{{--        @if (count($versions) > 1)--}}
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bookmark"></span> {{ $currentVersion }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -24,9 +24,9 @@
                     @endforeach
                 </ul>
             </li>
-        @else
-            <li><p class="navbar-text"><span class="glyphicon glyphicon-bookmark"></span> {{ $currentVersion }}</p></li>
-        @endif
+        {{--@else--}}
+            {{--<li><p class="navbar-text"><span class="glyphicon glyphicon-bookmark"></span> {{ $currentVersion }}</p></li>--}}
+        {{--@endif--}}
     @endif
 
 </ul>

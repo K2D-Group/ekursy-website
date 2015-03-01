@@ -9,7 +9,7 @@
             </button>
 
 			<span class="navbar-brand">
-				<a href="/">K2D</a>
+				<a href="/">{{ Config::get('app.name.short') }}</a>
 
 				<div class="pull-right">
                     <button type="button" data-toggle="offcanvas">
