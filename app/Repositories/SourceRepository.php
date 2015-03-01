@@ -3,15 +3,18 @@
 namespace App\Repositories;
 use App\Course;
 use App\CourseLesson;
+use App\Helpers\MarkdownHelper;
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class SourceRepository {
 
     private $client;
+    private $markdown;
 
     function __construct()
     {
+        $this->markdown = new MarkdownHelper();
         $this->client = new Client();
         $oauth = new Oauth1([
             'consumer_key'    => config('services.bitbucket.client_id'),
@@ -61,7 +64,31 @@ class SourceRepository {
                         $l->slug = $s;
                         $l->course_id = $Course->id;
                     }
-                    $l->name = $lesson;
+                    $prased = $this->markdown->parseMeta($lesson);
+                    $l->name = isset($prased[1]['title'][0]) ? $prased[1]['title'][0] : null;
+                    $l->need_login = isset($prased[1]['private'][0]) && strtolower($prased[1]['private'][0]) == true ? true : false;
+                    $l->content = $lesson;
+                    $l->authors = isset($prased[1]['author']) ? $prased[1]['author'] : [];
+                    $l->reviewers = isset($prased[1]['reviewer']) ? $prased[1]['reviewer'] : [];
+                    $l->updates = isset($prased[1]['date']) ? $prased[1]['date'] : [];
+                    
+                    $l->sources = [];
+                    if(isset($prased[1]['source'])){
+                        foreach ($prased[1]['source'] as $key=>$val) {
+                            if(is_numeric($key)){
+                                $l->sources[$val] = null;
+                            }else{
+                                $l->sources[$key] = $val;
+                            }
+                        }
+                    }
+
+                    try{
+                        $l->last_update = isset($prased[1]['date']) ? new \Carbon\Carbon(end($prased[1]['date'])) : null;
+                    }catch(\Exception $e){
+                        $l->last_update = null;
+                    }
+
                     $l->save();
                     $only_existing_lessons[] = $l->id;
                 }
@@ -133,8 +160,8 @@ class SourceRepository {
 
                     if (zip_entry_open($zip, $zip_entry)) {
                         if(substr($file_name, '-3') == '.md') {
-                            $prased['course'][substr($file_name, '0', '-3')] = zip_entry_filesize($zip_entry);
                             $contents = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+                            $prased['course'][substr($file_name, '0', '-3')] = $contents;
                             zip_entry_close($zip_entry);
                         }else{
                             $prased['other'][$file_name] = zip_entry_filesize($zip_entry);

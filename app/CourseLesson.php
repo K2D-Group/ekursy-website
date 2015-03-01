@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CourseLesson extends Model {
 
     use SoftDeletes;
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'last_update'];
 
     /**
      * The attributes that are mass assignable.
@@ -38,4 +38,16 @@ class CourseLesson extends Model {
     function course(){
         return $this->belongsTo('\App\Course', 'course_id');
     }
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'need_login' => 'boolean',
+        'authors' => 'array',
+        'reviewers' => 'array',
+        'sources' => 'array',
+        'updates' => 'array',
+    ];
 }

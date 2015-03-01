@@ -16,8 +16,14 @@ class CreateCourseLessonsTable extends Migration {
             $table->increments('id');
             $table->integer('course_id')->unsigned();
             $table->string('slug');
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->text('content');
+            $table->text('authors');
+            $table->text('reviewers');
+            $table->text('sources');
+            $table->text('updates');
             $table->date('last_update')->nullable();
+            $table->boolean('need_login')->default(0);
             $table->softDeletes();
             $table->timestamps();
 
