@@ -24,12 +24,11 @@ class CoursesController extends Controller {
         if(isset($metadata['source']))
         {
             $sources = [];
-            foreach ($metadata['source'] as $s) {
-                $s = explode(' - ', $s, 2);
-                if(count($s) == 1)
-                    $sources[] = $s[0];
+            foreach ($metadata['source'] as $k=>$s) {
+                if(is_numeric($k))
+                    $sources[] = $s;
                 else
-                    $sources[] = link_to($s[0], $s[1]);
+                    $sources[] = link_to($s, $k);
             }
             $sources = implode(', ', $sources);
         }else{
