@@ -19,7 +19,24 @@ class CoursesController extends Controller {
         list($coursetxt, $metadata) = $courseRepository->get($course, $version, $page);
 
         $courses[$course] = array_diff($courses[$course], ['develop']);
-        
+
+
+        if(isset($metadata['source']))
+        {
+            $sources = [];
+            foreach ($metadata['source'] as $s) {
+                $s = explode(' - ', $s, 2);
+                if(count($s) == 1)
+                    $sources[] = $s[0];
+                else
+                    $sources[] = link_to($s[0], $s[1]);
+            }
+            $sources = implode(', ', $sources);
+        }else{
+            $sources = null;
+        }
+
+
 		return view('frontend.course', [
             'currentVersion' => $version,
             'versions' => $courses[$course],
@@ -29,6 +46,7 @@ class CoursesController extends Controller {
             'author' => isset($metadata['author']) ? implode(', ', $metadata['author']) : null,
             'reviewer' => isset($metadata['reviewer']) ? implode(', ', $metadata['reviewer']) : null,
             'content' => $coursetxt,
+            'sources' => $sources,
             'toc' => $toc[0]
         ]);
 	}
