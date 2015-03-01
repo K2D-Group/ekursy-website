@@ -45,12 +45,17 @@ class CoursesController extends Controller {
             $sources = null;
         }
 
+        $view = 'course_viewer.course';
+        if(isset($metadata['private']) && strtolower($metadata['private'][0]) == true && \Auth::guest())
+            $view = 'course_viewer.noaccess';
 
-		return view('course_viewer.course', [
+
+        return view($view, [
             'currentVersion' => $version,
             'versions' => $courses[$course],
             'currentManual' => $course,
             'manuals' => array_keys($courses),
+            'title' => isset($metadata['title']) ? implode(', ', $metadata['title']) : null,
             'date' => isset($metadata['date']) ? implode(', ', $metadata['date']) : null,
             'author' => isset($metadata['author']) ? implode(', ', $metadata['author']) : null,
             'reviewer' => isset($metadata['reviewer']) ? implode(', ', $metadata['reviewer']) : null,
