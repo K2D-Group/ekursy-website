@@ -22,6 +22,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereUpdatedAt($value)
  * @property integer $course_id
  * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereCourseId($value)
+ * @property string $content 
+ * @property string $authors 
+ * @property string $reviewers 
+ * @property string $sources 
+ * @property string $updates 
+ * @property boolean $need_login 
+ * @property-read \App\Course $course 
+ * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereAuthors($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereReviewers($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereSources($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereUpdates($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\CourseLesson whereNeedLogin($value)
  */
 class CourseLesson extends Model {
 

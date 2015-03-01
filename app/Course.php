@@ -20,8 +20,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Course whereUpdatedAt($value)
  * @property string $slug
  * @method static \Illuminate\Database\Query\Builder|\App\Course whereSlug($value)
- * @property string $version 
+ * @property string $version
  * @method static \Illuminate\Database\Query\Builder|\App\Course whereVersion($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CourseLesson[] $lessons 
  */
 class Course extends Model {
 

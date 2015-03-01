@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\CourseViewer;
 
+use App\Course;
 use App\Http\Controllers\Controller;
 use App\Repositories\CourseRepository;
 use App\Repositories\SourceRepository;
@@ -7,36 +8,29 @@ use App\Repositories\SourceRepository;
 
 class CoursesController extends Controller {
 
-	public function index(CourseRepository $courseRepository, $course, $version = 'master', $page = 'toc')
+	public function index(CourseRepository $courseRepository, $course_name, $current_version = 'master', $page = 'toc')
 	{
-        $courses = $courseRepository->getList();
-
-        if(!isset($courses[$course]) || !in_array($version, $courses[$course]))
+        $course = Course::whereSlug($course_name)->whereVersion($current_version)->first();
+        if(is_null($course))
             abort(404);
 
-        $toc = $courseRepository->get($course, $version, 'toc');
+        $toc = $courseRepository->get($course->lessons()->whereSlug('toc')->firstOrFail());
 
+        $current_lesson = $course->lessons()->whereSlug($page)->first();
+        list($content, $metadata) = $courseRepository->get($current_lesson);
 
-
-
-        list($coursetxt, $metadata) = $courseRepository->get($course, $version, $page);
-
-        if($coursetxt === false)
+        if(is_null($content))
             abort(404);
 
+        $courses_list = Course::where('version', '!=', 'develop')->groupBy('slug')->orderBy('name', 'asc')->get()->lists('name', 'slug');
+        $versions_list = Course::where('version', '!=', 'develop')->whereSlug($course_name)->orderBy('version', 'asc')->get()->lists('version', 'version');
 
-
-
-
-        $courses[$course] = array_diff($courses[$course], ['develop']);
-
-
-        if(isset($metadata['source']))
+        if(!empty($current_lesson->sources))
         {
             $sources = [];
-            foreach ($metadata['source'] as $k=>$s) {
-                if(is_numeric($k))
-                    $sources[] = $s;
+            foreach ($current_lesson->sources as $k=>$s) {
+                if(is_null($s))
+                    $sources[] = $k;
                 else
                     $sources[] = link_to($s, $k);
             }
@@ -46,20 +40,21 @@ class CoursesController extends Controller {
         }
 
         $view = 'course_viewer.course';
-        if(isset($metadata['private']) && strtolower($metadata['private'][0]) == true && \Auth::guest())
+
+        if($current_lesson->need_login == true && \Auth::guest())
             $view = 'course_viewer.noaccess';
 
 
         return view($view, [
-            'currentVersion' => $version,
-            'versions' => $courses[$course],
-            'currentManual' => $course,
-            'manuals' => array_keys($courses),
-            'title' => isset($metadata['title']) ? implode(', ', $metadata['title']) : null,
-            'date' => isset($metadata['date']) ? implode(', ', $metadata['date']) : null,
-            'author' => isset($metadata['author']) ? implode(', ', $metadata['author']) : null,
-            'reviewer' => isset($metadata['reviewer']) ? implode(', ', $metadata['reviewer']) : null,
-            'content' => $coursetxt,
+            'currentVersion' => $current_version,
+            'versions' => $versions_list,
+            'currentManual' => $course->name,
+            'manuals' => $courses_list,
+            'title' => $current_lesson->name,
+            'date' => !empty($current_lesson->updates) ? implode(', ', $current_lesson->updates) : null,
+            'author' => !empty($current_lesson->authors) ? implode(', ', $current_lesson->authors) : null,
+            'reviewer' => !empty($current_lesson->reviewers) ? implode(', ', $current_lesson->reviewers) : null,
+            'content' => $content,
             'sources' => $sources,
             'toc' => $toc[0]
         ]);
