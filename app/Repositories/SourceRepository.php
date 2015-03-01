@@ -141,7 +141,7 @@ class SourceRepository {
      */
     public function download($repoFullName, $branch)
     {
-        $prased = [];
+        $prased = ['course'=>[], 'other'=>[]];
         $temporary_name = $this->getTempName();
         $response = $this->client->get('https://bitbucket.org/' . $repoFullName . '/get/' . $branch . '.zip', ['auth' => 'oauth']);
         file_put_contents($temporary_name, $response->getBody());
