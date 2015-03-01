@@ -19,7 +19,7 @@
 			</span>
         </div>
 
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse navbar-inverse">
             @include('course_viewer.partials.navbar_nav')
 
             {{--@if (true)--}}
