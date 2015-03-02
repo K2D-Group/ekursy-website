@@ -1,15 +1,16 @@
 <?php
 namespace App\Helpers;
 
+use App\Helpers\HelperClasses\ParsedownExtraExtended;
 use ParsedownExtra;
 
 class MarkdownHelper
 {
-    public static function parse($text, $pathPrefix = '')
+    public static function parse($text, $pathPrefix = '', $pdf=false)
     {
         list($parsed, $metadata) = self::parseMeta($text);
         $basePath = $pathPrefix;
-        $rendered = (new ParsedownExtra)->setMarkupEscaped(true)->text($parsed);
+        $rendered = (new ParsedownExtraExtended($pdf))->setMarkupEscaped(true)->text($parsed);
 
         // Replace absolute relative paths (paths that start with / but not //)
         $rendered = preg_replace('/href=\"(\/[^\/].+?).md(#?.*?)\"/', "href=\"$basePath$1$2\"", $rendered);
@@ -22,7 +23,7 @@ class MarkdownHelper
     }
 
 
-    public static function parseMeta($content, $extract = false)
+    public static function parseMeta($content)
     {
         $metadata_list = [];
 

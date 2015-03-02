@@ -52,16 +52,7 @@ class PDFController extends Controller {
             }
         }
 
-
-//        dd($toc, $lista);
-
-
-//        $courseRepository->get();
-
-
-        $HTML = '';
-
-        $mpdf=new mPDF('PL_pl', 'A5', null, null, 10, 10, 15, 15, 10, 10);
+        $mpdf=new mPDF('PL_pl', 'A5', null, null, 5, 5, 15, 15, 5, 5);
         $mpdf->mirrorMargins = 1;
         $mpdf->defaultPageNumStyle = '1';
         $mpdf->useOnlyCoreFonts = true;    // false is default
@@ -76,6 +67,8 @@ class PDFController extends Controller {
 
         $mpdf->SetDisplayMode('fullpage', 'two');
 
+//        $mpdf->SetHeader('Kopia wygenerowana przez: Jan Kowalski');
+
 
 
 
@@ -84,20 +77,19 @@ class PDFController extends Controller {
         $mpdf->WriteHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"><meta charset="utf-8">');
         $mpdf->WriteHTML('<h1>Okładka</h1>');
 
-//        $mpdf->AddPageByArray([
-////            'pagenumstyle' => 'a',
-////            'resetpagenum' => 1
-//        ]);
-
-        // Stopka
+        $mpdf->AddPageByArray([
+            'pagenumstyle' => 'a',
+            'resetpagenum' => 1
+        ]);
+        $mpdf->SetFooter($course->name.' | K2D ©2015');
+        $mpdf->WriteHTML('<h1>Strona Tytułowa</h1>');
 
 
         // Spis treści
         $mpdf->TOCpagebreakByArray(array(
             'links' => 'on',
-            'toc-bookmarkText' => '',
-            'toc-preHTML' => '',
-            'resetpagenum' => 10
+            'toc-bookmarkText' => 'Spis Treści',
+            'toc-preHTML' => '<h1>Spis Treści</h1>',
         ));
 
 
@@ -109,13 +101,13 @@ class PDFController extends Controller {
             'pagenumstyle' => '1',
             'resetpagenum' => 1
         ]);
+
         $mpdf->SetFooter($course->name.' | K2D ©2015 | {PAGENO}');
 
 
 
         foreach ($lista as $main) {
-//            $HTML .= '<tocentry content="'.$main['name'].'" />';
-//            $mpdf->TOC_Entry($main['name'],0);
+            $mpdf->TOC_Entry($main['name'],0);
             if($main['file'] != ''){
                 // TODO
             }
@@ -126,12 +118,11 @@ class PDFController extends Controller {
                             $sub['file'] = substr($sub['file'], 0, -3);
                             $lesson = $course->lessons()->whereSlug($sub['file'])->first();
                             if(!is_null($lesson)){
-                                $l = $courseRepository->get($lesson);
-//                                $HTML .= '<pagebreak type="E" />';
-//                                $HTML .= '<tocentry content="'.$sub['name'].'" level="1" />';
+                                $l = $courseRepository->get($lesson, true);
                                 $mpdf->TOC_Entry($sub['name'],1);
                                 $mpdf->WriteHTML($l[0]);
-                                $mpdf->AddPage(null, 'next-even');
+//                                $mpdf->AddPage(null, 'next-even');
+                                $mpdf->AddPage();
 //                                dd($l);
                             }
                         }
@@ -151,6 +142,23 @@ class PDFController extends Controller {
 
 
 //        return $mpdf->Output();
+
+//        $mpdf->AddPage(null, 'odd');
+
+
+
+        $mpdf->InsertIndex();
+        $mpdf->AddPage();
+
+        $mpdf->SetFooter($course->name.' | K2D ©2015');
+
+        while( ((4-((count($mpdf->pages)+2) % 4)) % 4) != 0){
+            $mpdf->AddPage();
+        }
+        $mpdf->WriteHTML('<h1>Tylna okładka</h1>');
+
+
+
         $mpdf->Output(base_path('tmp/tmp.pdf'));
 //        return $this->makeBooklet(base_path('tmp/tmp.pdf'));
 
