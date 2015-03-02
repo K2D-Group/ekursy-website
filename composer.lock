@@ -1714,16 +1714,16 @@
         },
         {
             "name": "kduma/eloquent-sluggable",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kduma/L5-eloquent-sluggable.git",
-                "reference": "d5f44fae1baa0df9dec1d2c3c96ee11b74d1696e"
+                "reference": "13a113e356214350e0f91738ca7d6fa2f5258430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kduma/L5-eloquent-sluggable/zipball/d5f44fae1baa0df9dec1d2c3c96ee11b74d1696e",
-                "reference": "d5f44fae1baa0df9dec1d2c3c96ee11b74d1696e",
+                "url": "https://api.github.com/repos/kduma/L5-eloquent-sluggable/zipball/13a113e356214350e0f91738ca7d6fa2f5258430",
+                "reference": "13a113e356214350e0f91738ca7d6fa2f5258430",
                 "shasum": ""
             },
             "require": {
@@ -1758,7 +1758,7 @@
                 "laravel",
                 "slug"
             ],
-            "time": "2015-01-31 20:27:07"
+            "time": "2015-03-02 14:46:51"
         },
         {
             "name": "kduma/eloquent-tokenable",

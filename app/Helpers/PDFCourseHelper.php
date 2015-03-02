@@ -64,6 +64,20 @@ class PDFCourseHelper {
      */
     private $mpdf;
 
+
+    /**
+     * @param array $viewdata
+     */
+    public function addViewdata($key, $value)
+    {
+        $this->viewdata[$key] = $value;
+    }
+
+    /**
+     * @var array
+     */
+    private $viewdata = [];
+
     /**
      * @param Course $course
      * @param int $type
@@ -72,11 +86,13 @@ class PDFCourseHelper {
     function __construct(Course $course, $type)
     {
         $this->course = $course;
+        $this->addViewdata('course', $course);
 
         if(!isset($this->types[$type]))
             throw new \Exception('Type doesn\'t exist.');
 
         $this->type = $this->types[$type];
+        $this->addViewdata('type', $this->type);
 
         $this->mpdf = new mPDF('PL_pl', $this->type['size'], null, null, 5, 5, 15, 15, 5, 5);
         $this->mpdf->mirrorMargins = $this->type['mirrorMargins'];
@@ -120,7 +136,7 @@ class PDFCourseHelper {
 
         // TODO: Remove bootstrap
         $this->mpdf->WriteHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"><meta charset="utf-8">');
-        $this->mpdf->WriteHTML('<h1>Okładka</h1>');
+        $this->mpdf->WriteHTML(view('course_pdf.front_cover', $this->viewdata)->render());
 
         $this->mpdf->AddPageByArray([
             'pagenumstyle' => 'a',
@@ -129,7 +145,7 @@ class PDFCourseHelper {
 
         $this->SetFooter(false);
 
-        $this->mpdf->WriteHTML('<h1>Strona Tytułowa</h1>');
+        $this->mpdf->WriteHTML(view('course_pdf.second_page', $this->viewdata)->render());
 
 
         // Spis treści
@@ -151,10 +167,17 @@ class PDFCourseHelper {
     }
 
 
+    /**
+     * @param $txt
+     * @param int $level
+     */
     function TOC_Entry($txt, $level=0){
         return $this->mpdf->TOC_Entry($txt, $level);
     }
 
+    /**
+     * @param $html
+     */
     function AddPage($html){
         $this->mpdf->WriteHTML($html);
         if($this->type['start-on-even'])
@@ -170,12 +193,18 @@ class PDFCourseHelper {
     function addBackPages(){
         $this->SetFooter(false);
 
+
+        $this->mpdf->WriteHTML(view('course_pdf.last_page', $this->viewdata)->render());
+        $this->mpdf->AddPage();
+
+
+
         if($this->type['mirrorMargins'])
             while( ((4-((count($this->mpdf->pages)+2) % 4)) % 4) != 0){
                 $this->mpdf->AddPage();
             }
 
-        $this->mpdf->WriteHTML('<h1>Tylna okładka</h1>');
+        $this->mpdf->WriteHTML(view('course_pdf.back_cover', $this->viewdata)->render());
     }
 
 
