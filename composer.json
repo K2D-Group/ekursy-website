@@ -17,7 +17,7 @@
 	"require": {
 		"laravel/framework": "5.0.*",
 		"razielanarki/hyperlight": "0.1.*",
-		"mpdf/mpdf": "v6.0-beta",
+        "mpdf/mpdf": "~6.0",
 		"erusev/parsedown": "~1.5",
 		"erusev/parsedown-extra": "~0.7",
 		"intervention/image": "~2.1",

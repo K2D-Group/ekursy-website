@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6f15f1c22939580e84f979f02c957722",
+    "hash": "4a2de1e82d4466e4441cfa9cefd9f82b",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -2405,16 +2405,16 @@
         },
         {
             "name": "mpdf/mpdf",
-            "version": "v6.0-beta",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/finwe/mpdf.git",
-                "reference": "d2f16f67a9b397142beacbe96098bdffbb39ccd1"
+                "reference": "a15743d030ce3b5b7be36c6e83f76589b27c3f2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/finwe/mpdf/zipball/d2f16f67a9b397142beacbe96098bdffbb39ccd1",
-                "reference": "d2f16f67a9b397142beacbe96098bdffbb39ccd1",
+                "url": "https://api.github.com/repos/finwe/mpdf/zipball/a15743d030ce3b5b7be36c6e83f76589b27c3f2c",
+                "reference": "a15743d030ce3b5b7be36c6e83f76589b27c3f2c",
                 "shasum": ""
             },
             "require": {
@@ -2444,7 +2444,7 @@
                 "php",
                 "utf-8"
             ],
-            "time": "2014-01-07 11:55:40"
+            "time": "2015-03-01 10:27:49"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -4793,7 +4793,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mpdf/mpdf": 10,
         "laravel/socialite": 20,
         "guzzlehttp/oauth-subscriber": 20,
         "daylerees/kurenai": 20

@@ -9,7 +9,7 @@ class MarkdownHelper
     {
         list($parsed, $metadata) = self::parseMeta($text);
         $basePath = $pathPrefix;
-        $rendered = (new ParsedownExtra)->text($parsed);
+        $rendered = (new ParsedownExtra)->setMarkupEscaped(true)->text($parsed);
 
         // Replace absolute relative paths (paths that start with / but not //)
         $rendered = preg_replace('/href=\"(\/[^\/].+?).md(#?.*?)\"/', "href=\"$basePath$1$2\"", $rendered);
