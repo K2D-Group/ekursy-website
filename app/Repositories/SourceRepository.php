@@ -78,9 +78,6 @@ class SourceRepository {
                     }catch(\Exception $e){
                         $l->last_update = null;
                     }
-                    $l->sources = [];
-                    $l->save();
-
 
                     $sources = [];
                     if(isset($prased[1]['source']) && !empty($prased[1]['source'])){
@@ -92,7 +89,9 @@ class SourceRepository {
                             }
                         }
 
-                        $l->sources &= $sources;
+                        $l->sources = $sources;
+                    }else{
+                        $l->sources = [];
                     }
                     $l->save();
 
