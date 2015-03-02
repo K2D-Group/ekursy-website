@@ -64,6 +64,11 @@ class PDFCourseHelper {
      */
     private $mpdf;
 
+    /**
+     * @var bool
+     */
+    private $download=false;
+
 
     /**
      * @param array $viewdata
@@ -83,7 +88,7 @@ class PDFCourseHelper {
      * @param int $type
      * @throws \Exception
      */
-    function __construct(Course $course, $type)
+    function __construct(Course $course, $type, $download=true)
     {
         $this->course = $course;
         $this->addViewdata('course', $course);
@@ -112,6 +117,7 @@ class PDFCourseHelper {
 
         $this->mpdf->SetDisplayMode('fullpage', 'two');
 
+        $this->download = $download;
     }
 
     /**
@@ -213,7 +219,10 @@ class PDFCourseHelper {
      */
     function output(){
         if(!$this->type['booklet'])
-            return $this->mpdf->Output($this->type['output_name'].' - '.$this->course->name.' (' . $this->course->version . ').pdf', $this->type['output']);
+            if($this->download)
+                return $this->mpdf->Output($this->type['output_name'].' - '.$this->course->name.' (' . $this->course->version . ').pdf', $this->type['output']);
+            else
+                return $this->mpdf->Output(null, 'S');
 
         $tmpname = $this->getTempName();
         $this->mpdf->Output($tmpname);
@@ -270,7 +279,10 @@ class PDFCourseHelper {
             }
         }
 
-        return $mpdf->Output($this->type['output_name'].' - '.$this->course->name.' (' . $this->course->version . ').pdf', $this->type['output']);
+        if($this->download)
+            return $mpdf->Output($this->type['output_name'].' - '.$this->course->name.' (' . $this->course->version . ').pdf', $this->type['output']);
+        else
+            return $mpdf->Output(null, 'S');
     }
 
     /**
