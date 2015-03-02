@@ -13,6 +13,8 @@ class PDFController extends Controller {
 
 	public function get(CourseRepository $courseRepository, $course_name, $current_version, $type=0)
 	{
+        $this->protect('course.pdf');
+
         $course = Course::whereSlug($course_name)->whereVersion($current_version)->first();
         if(is_null($course))
             abort(404);
@@ -107,28 +109,33 @@ class PDFController extends Controller {
             return $PDF->output();
         });
 
+        $download = false;
         $filename = $branded ? '' : ' - White Label';
         switch($type){
             case 2:
-                $filename = 'BOOKLET - '.$course_name.' ('.$current_version.')'.$filename.'.pdf';
+                $filename = 'BOOKLET - '.$course->name.' ('.$current_version.')'.$filename.'.pdf';
+                $download = true;
                 break;
             case 1:
-                $filename = 'eBook - '.$course_name.' ('.$current_version.')'.$filename.'.pdf';
+                $filename = 'eBook - '.$course->name.' ('.$current_version.')'.$filename.'.pdf';
                 break;
             case 0:
             default:
-                $filename = ''.$course_name.' ('.$current_version.')'.$filename.'.pdf';
+                $filename = ''.$course->name.' ('.$current_version.')'.$filename.'.pdf';
                 break;
         }
         if(\Request::get('gen', 0) == 1)
             return [
                 'status'=>'ok',
                 'link'=>\Request::url().'?nobranding='.($branded?0:1),
-                'name'=>$filename
+                'name'=>$filename,
+                'target'=>$download ? '' : '_blank',
             ];
         $resp = response($PDF)->header('Content-Type', 'application/pdf');
-        if($type == 2)
+        if($download)
             $resp = $resp->header('Content-Disposition', 'attachment; filename='.$filename.';');
+        else
+            $resp = $resp->header('Content-Disposition', 'inline; filename='.$filename.';');
         return $resp;
     }
 

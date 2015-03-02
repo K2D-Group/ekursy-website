@@ -25,7 +25,7 @@
                 success: function(data) {
                     $('#head').html("Plik gotowy do pobrania");
                     $('#output').html(
-                            '<a class="btn btn-success" target="_blank" href="' + data.link +
+                            '<a class="btn btn-success" target="'+ data.target +'" href="' + data.link +
                             '">Pobierz: <strong>'+ data.name +'</strong></a>'
                     );
                 },
