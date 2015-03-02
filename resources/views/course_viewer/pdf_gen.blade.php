@@ -23,11 +23,17 @@
                     nobranding: "{{ $nobranding }}"
                 },
                 success: function(data) {
-                    $('#head').html("Plik gotowy do pobrania");
-                    $('#output').html(
-                            '<a class="btn btn-success" target="'+ data.target +'" href="' + data.link +
-                            '">Pobierz: <strong>'+ data.name +'</strong></a>'
-                    );
+                    if(data.status == 'ok') {
+                        $('#head').html("Plik gotowy do pobrania");
+                        $('#output').html(
+                                '<a class="btn btn-success" target="' + data.target + '" href="' + data.link +
+                                '">Pobierz: <strong>' + data.name + '</strong></a>'
+                        );
+                    }
+                    if(data.status == 'auth') {
+                        $('#head').html("Brak uprawnień");
+                        $('#output').html('<strong>' + data.reason + '</strong>');
+                    }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     $('#head').html("Nie można wygenerować pliku PDF.");

@@ -12,7 +12,6 @@ class CoursesController extends Controller {
 
     public function pdf(CourseRepository $courseRepository, $course_name, $current_version = 'master')
     {
-        $this->protect('course.pdf');
         list($course, $courses_list, $versions_list, $toc, $current_lesson) = $this->GetCourseInfo($courseRepository, $course_name, $current_version, 'toc');
 
         list($content, $metadata) = $courseRepository->get($current_lesson);

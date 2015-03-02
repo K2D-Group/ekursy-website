@@ -13,7 +13,22 @@ class PDFController extends Controller {
 
 	public function get(CourseRepository $courseRepository, $course_name, $current_version, $type=0)
 	{
-        $this->protect('course.pdf');
+        if(!\Permissions::can('course.pdf'))
+            return [
+                'status'=>'auth',
+                'reason'=>'Nie masz uprawnień do pobierania plików PDF',
+            ];
+
+
+        switch($type){
+            case 2:
+                if(!\Permissions::can('course.pdf.booklet'))
+                    return [
+                        'status'=>'auth',
+                        'reason'=>'Nie masz uprawnień do pobierania tego typu plików PDF',
+                    ];
+                break;
+        }
 
         $course = Course::whereSlug($course_name)->whereVersion($current_version)->first();
         if(is_null($course))
@@ -65,12 +80,6 @@ class PDFController extends Controller {
                 }
             }
 
-            switch($type){
-                case 2:
-                    if(!\Permissions::can('course.pdf.booklet'))
-                        abort(404);
-                    break;
-            }
 
             $PDF = new PDFCourseHelper($course, $type, false);
 
