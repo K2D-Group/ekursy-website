@@ -18,6 +18,17 @@ Route::get('/kurs/{course}/{version}/{page?}', [
     'uses' => 'CourseViewer\CoursesController@index'
 ])->where('page', '(.*)');
 
+Route::get('/pdf/{course}/{version}', [
+    'middleware' => 'auth',
+    'as' => 'course.pdf',
+    'uses' => 'CourseViewer\CoursesController@pdf'
+]);
+
+Route::get('/pdf/{course}/{version}/{type}/download', [
+    'middleware' => 'auth',
+    'as' => 'course.pdf.make',
+    'uses' => 'CourseViewer\PDFController@get'
+])->where('type', '(0|1|2)');
 
 
 

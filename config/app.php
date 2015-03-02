@@ -4,7 +4,7 @@ return [
 
     'name' => [
         'short' => 'K2D',
-        'full' => 'K2D'
+        'full' => 'K2D - ekursy.cf'
     ],
 
     'copyright' => [
@@ -40,7 +40,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://ekursy.local/',
+	'url' => 'http://ekursy.cf/',
 
 	/*
 	|--------------------------------------------------------------------------

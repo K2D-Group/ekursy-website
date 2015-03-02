@@ -44,6 +44,7 @@
         <script src="{{ asset('/assets/codex/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/assets/codex/js/prettify/run_prettify.js') }}"></script>
         <script src="{{ asset('/assets/codex/js/codex.js') }}"></script>
+        @yield('script')
     </body>
 </html>
 
