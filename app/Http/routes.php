@@ -11,6 +11,8 @@
 |
 */
 
+Route::post('/hook/bitbucket', 'Hook\GitHookController@bitbucket');
+
 Route::get('/kurs/{course}/{version}/{page?}', [
     'as' => 'course',
     'uses' => 'CourseViewer\CoursesController@index'
