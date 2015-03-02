@@ -33,16 +33,16 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-download-alt"></span> Pobierz <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>0]) }}">PDF</a></li>
-                <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>1]) }}">E-Book PDF</a></li>
+                <li><a href="{{ route('course.pdf', [$currentManual, $currentVersion, 'print'=>0]) }}">PDF</a></li>
+                <li><a href="{{ route('course.pdf', [$currentManual, $currentVersion, 'print'=>1]) }}">E-Book PDF</a></li>
                 @if(Auth::check() && \Permissions::can('course.pdf.booklet'))
-                    <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>2]) }}">Booklet</a></li>
+                    <li><a href="{{ route('course.pdf', [$currentManual, $currentVersion, 'print'=>2]) }}">Booklet</a></li>
                 @endif
                 @if(Auth::check() && \Permissions::can('course.pdf.whitelabel'))
-                    <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>0, 'nobranding'=>1]) }}">PDF (WhiteLabel)</a></li>
-                    <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>1, 'nobranding'=>1]) }}">E-Book PDF (WhiteLabel)</a></li>
+                    <li><a href="{{ route('course.pdf', [$currentManual, $currentVersion, 'print'=>0, 'nobranding'=>1]) }}">PDF (WhiteLabel)</a></li>
+                    <li><a href="{{ route('course.pdf', [$currentManual, $currentVersion, 'print'=>1, 'nobranding'=>1]) }}">E-Book PDF (WhiteLabel)</a></li>
                     @if(Auth::check() && \Permissions::can('course.pdf.booklet'))
-                        <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>2, 'nobranding'=>1]) }}">Booklet (WhiteLabel)</a></li>
+                        <li><a href="{{ route('course.pdf', [$currentManual, $currentVersion, 'print'=>2, 'nobranding'=>1]) }}">Booklet (WhiteLabel)</a></li>
                     @endif
                 @endif
             </ul>

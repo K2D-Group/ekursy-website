@@ -100,6 +100,7 @@ class PDFCourseHelper {
         $this->addViewdata('type', $this->type);
 
         $this->mpdf = new mPDF('PL_pl', $this->type['size'], null, null, 5, 5, 15, 15, 5, 5);
+        $this->mpdf->max_colH_correction = 1;
         $this->mpdf->mirrorMargins = $this->type['mirrorMargins'];
 
         $this->mpdf->defaultPageNumStyle = '1';
@@ -199,7 +200,7 @@ class PDFCourseHelper {
     function addBackPages(){
         $this->SetFooter(false);
 
-
+        $this->TOC_Entry('Informacje dodatkowe');
         $this->mpdf->WriteHTML(view('course_pdf.last_page', $this->viewdata)->render());
         $this->mpdf->AddPage();
 

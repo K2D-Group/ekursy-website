@@ -26,6 +26,7 @@ class PDFController extends Controller {
             $branded = !(bool)\Request::get('nobranding', false);
 
 
+
         $RememberKey = 'course_pdf.' . $course_name . '.' . $current_version . '.' . $type . '.' . \Auth::user()->id . '.';
         $RememberKey .= $branded ? 'true' : 'false';
         $PDF = \Cache::remember($RememberKey, 60, function () use ($toc, $type, $course, $courseRepository, $branded) {
@@ -77,6 +78,8 @@ class PDFController extends Controller {
 
             $PDF->addFrontPages();
 
+
+            $infoAboutPages = [];
             foreach ($lista as $main) {
                 $PDF->TOC_Entry($main['name'],0);
                 if($main['file'] != ''){
@@ -92,13 +95,14 @@ class PDFController extends Controller {
                                     $l = $courseRepository->get($lesson, true);
                                     $PDF->TOC_Entry($sub['name'],1);
                                     $PDF->AddPage($l[0]);
+                                    $infoAboutPages[$main['name']][$sub['name']] = $l[1];
                                 }
                             }
                         }
                     }
                 }
             }
-
+            $PDF->addViewdata('info', $infoAboutPages);
             $PDF->addBackPages();
             return $PDF->output();
         });
