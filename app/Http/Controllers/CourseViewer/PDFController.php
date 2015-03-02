@@ -4,6 +4,7 @@ use App\Course;
 use App\Http\Controllers\Controller;
 use App\Repositories\CourseRepository;
 use App\Repositories\SourceRepository;
+use Auth;
 use mPDF;
 
 
@@ -53,21 +54,35 @@ class PDFController extends Controller {
         }
 
         $mpdf=new mPDF('PL_pl', 'A5', null, null, 5, 5, 15, 15, 5, 5);
-        $mpdf->mirrorMargins = 1;
+
+        if(\Request::get('print') == 0)
+            $mpdf->mirrorMargins = 0;
+        else
+            $mpdf->mirrorMargins = 1;
+
         $mpdf->defaultPageNumStyle = '1';
         $mpdf->useOnlyCoreFonts = true;    // false is default
-//        $mpdf->SetProtection(array('print'));
+
+        if(\Request::get('print') != 2)
+            $mpdf->SetProtection(array('print'));
+
         $mpdf->SetTitle($course->name);
-        $mpdf->SetAuthor("K2D");
-        $mpdf->SetWatermarkText("DEMO");
-        $mpdf->showWatermarkText = false;
-        $mpdf->watermark_font = 'DejaVuSansCondensed';
-        $mpdf->watermarkTextAlpha = 0.1;
+        $mpdf->SetAuthor(config('app.name.full'));
+
+        if(!\Permissions::can('course.pdf.whitelabel')) {
+            $mpdf->SetWatermarkText("ekursy.cf");
+            $mpdf->showWatermarkText = true;
+            $mpdf->watermark_font = 'DejaVuSansCondensed';
+            $mpdf->watermarkTextAlpha = 0.1;
+
+            $mpdf->SetHeader('Kopia wygenerowana dla: '.Auth::user()->name.' ('.Auth::user()->email.')');
+        }
+
         $mpdf->h2bookmarks = array('H1'=>0, 'H2'=>1, 'H3'=>2, 'H4'=>3);
 
         $mpdf->SetDisplayMode('fullpage', 'two');
 
-//        $mpdf->SetHeader('Kopia wygenerowana przez: Jan Kowalski');
+
 
 
 
@@ -81,7 +96,8 @@ class PDFController extends Controller {
             'pagenumstyle' => 'a',
             'resetpagenum' => 1
         ]);
-        $mpdf->SetFooter($course->name.' | K2D ©2015');
+        $mpdf->SetFooter($course->name.' ('.$course->version.') | '.config('app.copyright.name').' ©'.Config('app.copyright.year'));
+
         $mpdf->WriteHTML('<h1>Strona Tytułowa</h1>');
 
 
@@ -102,7 +118,8 @@ class PDFController extends Controller {
             'resetpagenum' => 1
         ]);
 
-        $mpdf->SetFooter($course->name.' | K2D ©2015 | {PAGENO}');
+        
+        $mpdf->SetFooter($course->name.' ('.$course->version.') | '.config('app.copyright.name').' ©'.Config('app.copyright.year').' | {PAGENO}');
 
 
 
@@ -123,7 +140,6 @@ class PDFController extends Controller {
                                 $mpdf->WriteHTML($l[0]);
 //                                $mpdf->AddPage(null, 'next-even');
                                 $mpdf->AddPage();
-//                                dd($l);
                             }
                         }
                     }
@@ -131,36 +147,24 @@ class PDFController extends Controller {
             }
         }
 
-
-
-//        $HTML = str_replace('<table>', '<table class="table table-striped table-bordered">', $HTML);
-
-
-//        return $HTML;
-
-//        $mpdf->WriteHTML($HTML);
-
-
-//        return $mpdf->Output();
-
-//        $mpdf->AddPage(null, 'odd');
-
-
-
         $mpdf->InsertIndex();
         $mpdf->AddPage();
 
-        $mpdf->SetFooter($course->name.' | K2D ©2015');
+        $mpdf->SetFooter($course->name.' ('.$course->version.') | '.config('app.copyright.name').' ©'.Config('app.copyright.year'));
 
+        if(\Request::get('print') != 0)
         while( ((4-((count($mpdf->pages)+2) % 4)) % 4) != 0){
             $mpdf->AddPage();
         }
         $mpdf->WriteHTML('<h1>Tylna okładka</h1>');
 
 
+        if(\Request::get('print') != 2)
+            return $mpdf->Output();
 
-        $mpdf->Output(base_path('tmp/tmp.pdf'));
-//        return $this->makeBooklet(base_path('tmp/tmp.pdf'));
+        $tmpname = $this->getTempName();
+        $mpdf->Output($tmpname);
+        return $this->makeBooklet($tmpname);
 
     }
     function makeBooklet($file){
@@ -208,6 +212,11 @@ class PDFController extends Controller {
             }
         }
         return $pp;
+    }
+
+    public function getTempName($prefix = 'pdf')
+    {
+        return tempnam(sys_get_temp_dir(), $prefix);
     }
 
 }

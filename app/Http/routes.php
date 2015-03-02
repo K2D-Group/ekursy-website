@@ -15,7 +15,9 @@ Route::get('/kurs/{course}/{version}/{page?}', [
     'as' => 'course',
     'uses' => 'CourseViewer\CoursesController@index'
 ])->where('page', '(.*)');
+
 Route::get('/pdf/{course}/{version}', [
+    'middleware' => 'auth',
     'as' => 'course.pdf',
     'uses' => 'CourseViewer\PDFController@get'
 ]);
