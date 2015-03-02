@@ -186,9 +186,9 @@ class PDFCourseHelper {
      */
     function AddPage($html){
         $this->mpdf->WriteHTML($html);
-        if($this->type['start-on-even'])
-            $this->mpdf->AddPage(null, 'next-even');
-        else
+//        if($this->type['start-on-even'])
+//            $this->mpdf->AddPage(null, 'next-even');
+//        else
             $this->mpdf->AddPage();
     }
 

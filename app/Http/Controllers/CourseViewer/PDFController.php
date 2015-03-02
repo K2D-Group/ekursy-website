@@ -26,7 +26,9 @@ class PDFController extends Controller {
             $branded = !(bool)\Request::get('nobranding', false);
 
 
-        $PDF = \Cache::remember('course_pdf.'.$course_name.'.'.$current_version.'.'.$type.'.'.\Auth::user()->id.'.'.$branded, 60, function () use ($toc, $type, $course, $courseRepository, $branded) {
+        $RememberKey = 'course_pdf.' . $course_name . '.' . $current_version . '.' . $type . '.' . \Auth::user()->id . '.';
+        $RememberKey .= $branded ? 'true' : 'false';
+        $PDF = \Cache::remember($RememberKey, 60, function () use ($toc, $type, $course, $courseRepository, $branded) {
             $lista = [];
             $i = 0;
             foreach($toc as &$t){
@@ -117,7 +119,7 @@ class PDFController extends Controller {
         if(\Request::get('gen', 0) == 1)
             return [
                 'status'=>'ok',
-                'link'=>\Request::url().'?branded='.$branded,
+                'link'=>\Request::url().'?nobranding='.($branded?0:1),
                 'name'=>$filename
             ];
         $resp = response($PDF)->header('Content-Type', 'application/pdf');

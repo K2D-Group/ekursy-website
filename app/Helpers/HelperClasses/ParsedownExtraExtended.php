@@ -40,6 +40,9 @@ class ParsedownExtraExtended extends ParsedownExtra {
         }
         return $text;
     }
+
+    protected $footnoteCount = 0;
+
     protected function inlineFootnoteMarker($Excerpt)
     {
         if (preg_match('/^\[\^(.+?)\]/', $Excerpt['text'], $matches))
