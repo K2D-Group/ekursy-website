@@ -29,19 +29,21 @@
         {{--@endif--}}
     @endif
 
-    @if (true)
-        {{--        @if (count($versions) > 1)--}}
+    @if (Auth::check())
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicons glyphicons-download-alt"></span> Pobierz <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-download-alt"></span> Pobierz <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>0]) }}" target="_blank">PDF</a></li>
                 <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>1]) }}" target="_blank">E-Book PDF</a></li>
-                <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>2]) }}" target="_blank">Booklet</a></li>
+                @if(Auth::check() && \Permissions::can('course.pdf.booklet'))
+                    <li><a href="{{ route('course.pdf', [$currentManual, $version, 'print'=>2]) }}">Booklet</a></li>
+                @endif
             </ul>
         </li>
-        {{--@else--}}
-        {{--<li><p class="navbar-text"><span class="glyphicon glyphicon-bookmark"></span> {{ $currentVersion }}</p></li>--}}
-        {{--@endif--}}
+    @else
+        <li class="dropdown">
+            <a href="{{ route('auth.login') }}" ><span class="glyphicon glyphicon-download-alt"></span> Pobierz</a>
+        </li>
     @endif
 
 </ul>

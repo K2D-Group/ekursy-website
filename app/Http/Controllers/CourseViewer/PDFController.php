@@ -56,7 +56,7 @@ class PDFController extends Controller {
         switch(\Request::get('print', 0)){
             case 2:
                 if(!\Permissions::can('course.pdf.booklet'))
-                    abort(403);
+                    abort(404);
                 break;
         }
 
