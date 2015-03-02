@@ -7,11 +7,14 @@ class GitHookController extends Controller {
 
 	public function bitbucket()
 	{
-		$data = \Request::get('payload', null);
+		$data = \Request::get('payload', '{}');
 	    $data = json_decode($data, true);
 
+        if(empty($data))
+            return;
+
         if(substr($data['repository']['name'], 0, 7) != 'Kurs - ')
-            return false;
+            return;
 
         $branches = [];
         foreach ($data['commits'] as $commit) {
@@ -21,7 +24,7 @@ class GitHookController extends Controller {
         }
 
         if(empty($branches))
-            return false;
+            return;
 
         (new SourceRepository)->get();
 
