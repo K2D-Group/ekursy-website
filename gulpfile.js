@@ -75,5 +75,7 @@ elixir(function(mix) {
     mix.copy('resources/assets/js/backend-proui/', 'public/assets/backend-js/');
     mix.copy('resources/assets/js/frontend-proui/', 'public/assets/frontend-js/');
 
+    mix.copy('resources/assets/codex/', 'public/assets/codex/');
+
 
 });
