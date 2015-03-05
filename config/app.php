@@ -13,7 +13,7 @@ return [
         'url' => 'http://ekursy.cf/'
     ],
 
-    'version' => '1.5.1 beta',
+    'version' => '1.5.2 beta',
 
 
 	/*
